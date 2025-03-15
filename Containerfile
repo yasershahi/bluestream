@@ -9,6 +9,9 @@ COPY cosign.pub /etc/pki/containers/
 RUN dnf install -y gcc make libxcrypt-compat
 RUN dnf install -y https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
 
+# Brave Browser
+RUN bootc install to-existing-root brave-browser
+
 # Additional Packages
 RUN dnf install -y \
 	tailscale \
@@ -18,7 +21,6 @@ RUN dnf install -y \
 	nss-tools \
 	android-tools \
 	ifuse \
-	liberation-fonts-all \
 	fastfetch \
 	libimobiledevice \
 	libsss_autofs \
@@ -51,7 +53,8 @@ RUN dnf install -y --allowerasing \
         gstreamer1-plugins-ugly \
         gstreamer1-vaapi \
         mesa-va-drivers-freeworld \
-        mesa-vdpau-drivers-freeworld
+        mesa-vdpau-drivers-freeworld \
+        libva-intel-driver
 
 # H/W Video Acceleration
 RUN dnf install -y \
@@ -71,6 +74,7 @@ RUN rm -f /etc/yum.repos.d/_copr:copr.fedorainfracloud.org:phracek:PyCharm.repo 
     rm -f /etc/yum.repos.d/execat-mutter-performance.repo && \
     rm -f /etc/yum.repos.d/github.repo && \
     rm -f /etc/yum.repos.d/vscode.repo && \
+    rm -f /etc/yum.repos.d/brave-browser.repo && \
     rm -f /etc/xdg/autostart/org.gnome.Software.desktop && \
     systemctl enable flatpak-add-flathub-repo.service && \
     systemctl enable flatpak-replace-fedora-apps.service && \
