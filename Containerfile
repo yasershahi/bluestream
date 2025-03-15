@@ -10,8 +10,7 @@ RUN dnf install -y gcc make libxcrypt-compat
 RUN dnf install -y https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
 
 # Brave Browser
-RUN mkdir -p /opt/brave.com && \
-    dnf install -y brave-browser
+RUN dnf install -y brave-browser
 
 # Additional Packages
 RUN dnf install -y \
