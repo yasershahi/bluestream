@@ -10,26 +10,8 @@ RUN dnf install -y gcc make libxcrypt-compat
 RUN dnf install -y https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
 
 # Brave Browser
-RUN mv /opt{,.bak} \
-    && mkdir /opt \
-    && echo "[brave-browser]
-name=Brave Browser
-baseurl=https://brave-browser-rpm-release.s3.brave.com/x86_64/
-gpgcheck=1
-repo_gpgcheck=1
-enabled=1
-gpgkey=https://brave-browser-rpm-release.s3.brave.com/x86_64/BRAVE-GPG-KEY" > /etc/yum.repos.d/brave-browser.repo \
-    && dnf install -y brave-browser \
-    && mv /opt/brave.com /usr/lib/brave-browser \
-    && ln -sf /usr/lib/brave-browser/brave /usr/bin/brave-browser \
-    && mkdir -p /usr/share/icons/hicolor/{16x16/apps,24x24/apps,32x32/apps,48x48/apps,64x64/apps,128x128/apps,256x256/apps} \
-    && for i in "16" "24" "32" "48" "64" "128" "256"; do \
-        ln -sf /usr/lib/brave-browser/product_logo_$i.png /usr/share/icons/hicolor/${i}x${i}/apps/brave-browser.png \
-    ; done \
-    && rm -rf /etc/cron.daily \
-    && rmdir /opt/{brave,} \
-    && mv /opt{.bak,} \
-    && dnf clean all
+RUN mkdir -p /opt/brave.com && \
+    dnf install -y brave-browser
 
 # Additional Packages
 RUN dnf install -y \
