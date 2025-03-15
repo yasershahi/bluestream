@@ -43,10 +43,10 @@ RUN dnf install -y \
 RUN dnf reinstall -y mutter --repo copr:copr.fedorainfracloud.org:execat:mutter-performance
 
 # Codecs
-RUN dnf swap 'ffmpeg-free' 'ffmpeg' --allowerasing && \
-    dnf4 group upgrade multimedia && \
-    dnf upgrade @multimedia --setopt="install_weak_deps=False" --exclude=PackageKit-gstreamer-plugin && \
-    dnf group install -y sound-and-video
+RUN dnf swap 'ffmpeg-free' 'ffmpeg' --allowerasing
+RUN dnf4 group upgrade multimedia
+RUN dnf upgrade @multimedia --setopt="install_weak_deps=False" --exclude=PackageKit-gstreamer-plugin
+RUN dnf group install -y sound-and-video
 
 # H/W Video Acceleration
 RUN dnf install -y \
