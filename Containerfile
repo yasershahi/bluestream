@@ -43,8 +43,7 @@ RUN dnf install -y \
 RUN dnf reinstall -y mutter --repo copr:copr.fedorainfracloud.org:execat:mutter-performance
 
 # Codecs
-RUN dnf remove -y ffmpeg-free && \
-    dnf install -y \
+RUN dnf install -y --allowerasing \
         ffmpeg \
         gstreamer1-plugin-libav \
         gstreamer1-plugins-bad-free-extras \
