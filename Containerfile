@@ -9,10 +9,8 @@ COPY cosign.pub /etc/pki/containers/
 RUN dnf install -y gcc make libxcrypt-compat
 RUN dnf install -y https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
 
-# Add Brave Browser repository and install
-RUN dnf install -y dnf-plugins-core && \
-    dnf config-manager --add-repo https://brave-browser-rpm-release.s3.brave.com/x86_64/ \
-    && dnf install -y brave-browser
+# Brave Browser
+RUN dnf install -y brave-browser
 
 # Additional Packages
 RUN dnf install -y \
