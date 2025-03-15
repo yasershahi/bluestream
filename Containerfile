@@ -37,7 +37,8 @@ RUN dnf install -y \
 	heif-pixbuf-loader \
 	pipx \
 	subversion \
-	zstd
+	zstd \
+	brave-browser
 
 # Patch Mutter
 RUN dnf reinstall -y mutter --repo copr:copr.fedorainfracloud.org:execat:mutter-performance
@@ -63,10 +64,7 @@ RUN dnf install -y \
 	gstreamer1-plugin-openh264 \
 	mozilla-openh264
 
-RUN dnf config-manager setopt fedora-cisco-openh264.enabled=1	
-
-# Brave Browser
-RUN dnf config-manager addrepo --from-repofile=https://brave-browser-rpm-release.s3.brave.com/brave-browser.repo && dnf install -y brave-browser
+RUN dnf config-manager setopt fedora-cisco-openh264.enabled=1
 
 # Cleanup & Finalize
 RUN rm -rf /tmp/* /var/*
@@ -75,6 +73,7 @@ RUN rm -f /etc/yum.repos.d/_copr:copr.fedorainfracloud.org:phracek:PyCharm.repo 
     rm -f /etc/yum.repos.d/execat-mutter-performance.repo && \
     rm -f /etc/yum.repos.d/github.repo && \
     rm -f /etc/yum.repos.d/vscode.repo && \
+    rm -f /etc/yum.repos.d/brave-browser.repo && \
     rm -f /etc/xdg/autostart/org.gnome.Software.desktop && \
     systemctl enable flatpak-add-flathub-repo.service && \
     systemctl enable flatpak-replace-fedora-apps.service && \
