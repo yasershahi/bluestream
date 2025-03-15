@@ -1,0 +1,179 @@
+name: Build image
+
+on:
+  schedule:
+    - cron: '0 5 * * *'  # Every day at 5:00 AM UTC
+  pull_request:
+    branches:
+      - main
+    paths:
+      - .github/workflows/*.yml
+      - Containerfile*
+      - rootfs/**
+  push:
+    branches:
+      - main
+    paths:
+      - Containerfile*
+      - rootfs/**
+
+  workflow_dispatch:
+
+env:
+  IMAGE_NAME: ${{ github.event.repository.name }}
+  REGISTRY_URL: ghcr.io
+  REGISTRY_USERNAME: ${{ github.repository_owner }}
+  REGISTRY_PASSWORD: ${{ secrets.GITHUB_TOKEN }}
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+      id-token: write
+    strategy:
+      fail-fast: false
+      matrix:
+        major_version: [41]
+        platform:
+          - linux/amd64
+
+    steps:
+      - name: Prepare
+        run: |
+          platform=${{ matrix.platform }}
+          echo "PLATFORM_PAIR=${{ matrix.major_version }}_${platform//\//-}" >> $GITHUB_ENV
+
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Get Git commit timestamps
+        run: echo "TIMESTAMP=$(git log -1 --pretty=%ct)" >> $GITHUB_ENV
+
+      - name: Log into registry
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ env.REGISTRY_URL }}
+          username: ${{ env.REGISTRY_USERNAME }}
+          password: ${{ env.REGISTRY_PASSWORD }}
+
+      - name: Extract Docker metadata
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: |
+            ${{ env.REGISTRY_URL }}/${{ env.REGISTRY_USERNAME }}/${{ env.IMAGE_NAME }}
+
+      - name: Set up Docker Buildx
+        id: buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build and push image
+        id: build-and-push
+        uses: docker/build-push-action@v6
+        env:
+          ACTIONS_RUNTIME_TOKEN: ''
+          SOURCE_DATE_EPOCH: ${{ env.TIMESTAMP }}
+        with:
+          file: |
+            ./Containerfile
+          build-args: |
+            FEDORA_MAJOR_VERSION=${{ matrix.major_version }}
+          platforms: ${{ matrix.platform }}
+          provenance: false
+          push: true
+          labels: ${{ steps.meta.outputs.labels }}
+          outputs: type=image,name=${{ env.REGISTRY_URL }}/${{ env.REGISTRY_USERNAME }}/${{ env.IMAGE_NAME }},push-by-digest=true,name-canonical=true
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+      - name: Export digest
+        run: |
+          mkdir -p /tmp/digests
+          digest="${{ steps.build-and-push.outputs.digest }}"
+          touch "/tmp/digests/${digest#sha256:}"
+
+      - name: Upload digest
+        uses: actions/upload-artifact@v4
+        with:
+          name: digests-${{ env.PLATFORM_PAIR }}
+          path: /tmp/digests/*
+          if-no-files-found: error
+          retention-days: 1
+
+      - name: Echo outputs
+        run: |
+          echo "${{ toJSON(steps.build-and-push.outputs) }}"
+
+  merge:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+      id-token: write
+    if: ${{ always() }}
+    needs:
+      - build
+    strategy:
+      fail-fast: false
+      matrix:
+        major_version: [41]
+        include:
+          - major_version: 41
+            is_latest: true
+            is_stable: true
+
+    steps:
+      - name: Download digests
+        uses: actions/download-artifact@v4
+        with:
+          path: /tmp/digests
+          pattern: digests-${{ matrix.major_version }}*
+          merge-multiple: true
+
+      - name: Log into registry
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ env.REGISTRY_URL }}
+          username: ${{ env.REGISTRY_USERNAME }}
+          password: ${{ env.REGISTRY_PASSWORD }}
+
+      - name: Extract Docker metadata
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: |
+            ${{ env.REGISTRY_URL }}/${{ env.REGISTRY_USERNAME }}/${{ env.IMAGE_NAME }}
+          labels: |
+            org.opencontainers.image.description=${{ github.event.repository.description }}
+          tags: |
+            type=raw,value=${{ matrix.major_version }},enable=${{ github.event_name != 'pull_request' && matrix.major_version != '' }}
+            type=ref,suffix=_${{ matrix.major_version }},event=pr,enable=${{ github.event_name == 'pull_request' }}
+            type=raw,value=latest,enable=${{ github.event_name != 'pull_request' && matrix.is_latest == true }}
+            type=raw,value=stable,enable=${{ github.event_name != 'pull_request' && matrix.is_stable == true }}
+            type=schedule,pattern={{date 'YYYYMMDD'}},enable=${{ github.event_name != 'pull_request' && matrix.is_stable == true }}
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Create manifest list and push
+        working-directory: /tmp/digests
+        run: |
+          docker buildx imagetools create $(jq -cr '.tags | map("-t " + .) | join(" ")' <<< "$DOCKER_METADATA_OUTPUT_JSON") \
+            $(printf '${{ env.REGISTRY_URL }}/${{ env.REGISTRY_USERNAME }}/${{ env.IMAGE_NAME }}@sha256:%s ' *)
+
+      - name: Inspect image
+        run: |
+          docker buildx imagetools inspect ${{ env.REGISTRY_URL }}/${{ env.REGISTRY_USERNAME }}/${{ env.IMAGE_NAME }}:${{ steps.meta.outputs.version }}
+
+      - name: Install Cosign
+        uses: sigstore/cosign-installer@v3.1.2
+
+      - name: Sign container image
+        run: |
+          cosign sign -y --recursive --key env://COSIGN_PRIVATE_KEY ${TAGS}
+        env:
+          TAGS: ${{ steps.meta.outputs.tags }}
+          COSIGN_PRIVATE_KEY: ${{ secrets.COSIGN_KEY }}
+          COSIGN_EXPERIMENTAL: false

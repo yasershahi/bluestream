@@ -1,2 +1,2 @@
-# bluestream
- Just Another Customized Fedora Silverblue Image
+# BlueStream
+Just Another Customized Fedora Silverblue Image
