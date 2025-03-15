@@ -43,15 +43,17 @@ RUN dnf install -y \
 RUN dnf reinstall -y mutter --repo copr:copr.fedorainfracloud.org:execat:mutter-performance
 
 # Codecs
-RUN dnf install -y \
-	ffmpeg \
-	gstreamer1-plugin-libav \
-	gstreamer1-plugins-bad-free-extras \
-	gstreamer1-plugins-bad-freeworld \
-	gstreamer1-plugins-ugly \
-	gstreamer1-vaapi \
-	mesa-va-drivers-freeworld \
-	mesa-vdpau-drivers-freeworld
+RUN dnf remove -y ffmpeg-free && \
+    dnf install -y \
+        ffmpeg \
+        gstreamer1-plugin-libav \
+        gstreamer1-plugins-bad-free-extras \
+        gstreamer1-plugins-bad-freeworld \
+        gstreamer1-plugins-ugly \
+        gstreamer1-vaapi \
+        mesa-va-drivers-freeworld \
+        mesa-vdpau-drivers-freeworld
+
 
 # H/W Video Acceleration
 RUN dnf install -y \
