@@ -11,33 +11,55 @@ RUN dnf install -y https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-rele
 
 # Additional Packages
 RUN dnf install -y \
-	tailscale \
+	aria2 \
+	adcli \
+	bcc \
+	btop \
+	code \
+	curl \
+	dnf-utils \
+	fastfetch \
+	ffmpegthumbnailer \
+	fish \
+	firewall-config \
+	fuse-encfs \
+	fzf \
+	gh \
+	git-credential-oauth \
 	gnome-themes-extra \
 	gnome-tweaks \
-	net-tools \
-	nss-tools \
-	android-tools \
+	google-noto-fonts-all \
+	gvfs-nfs \
+	heif-pixbuf-loader \
+	htop \
+	iftop \
 	ifuse \
-	fastfetch \
+	ibm-plex-mono-fonts \
+	iotop \
 	libimobiledevice \
 	libsss_autofs \
 	libxcrypt-compat \
-	scrcpy \
-	gh \
-	git-credential-oauth \
-	code \
-	aria2 \
-	fish \
-	unrar \
+	lm_sensors \
+	net-tools \
+	nmap \
+	neovim \
+	nss-tools \
 	p7zip \
 	p7zip-plugins \
-	ffmpegthumbnailer \
-	gvfs-nfs \
-	heif-pixbuf-loader \
 	pipx \
+	scrcpy \
+	screen \
+	strace \
 	subversion \
-	zstd \
-	ungoogled-chromium
+	tailscale \
+	telegram-desktop \
+	tmux \
+	traceroute \
+	unrar \
+	ungoogled-chromium \
+	wl-clipboard \
+	yt-dlp \
+	zstd
 
 # Patch Mutter
 RUN dnf reinstall -y mutter --repo copr:copr.fedorainfracloud.org:execat:mutter-performance
