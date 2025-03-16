@@ -17,7 +17,14 @@ RUN dnf install -y \
 	bcc \
 	btop \
 	code \
+	containerd.io \
 	curl \
+	devpod \
+	distrobox \
+	docker-ce \
+	docker-ce-cli \
+	docker-buildx-plugin \
+	docker-compose-plugin \
 	dnf-utils \
 	duf \
 	eza \
@@ -25,6 +32,7 @@ RUN dnf install -y \
 	ffmpegthumbnailer \
 	fish \
 	firewall-config \
+	flatpak-builder \
 	fuse-encfs \
 	fzf \
 	gh \
@@ -58,6 +66,10 @@ RUN dnf install -y \
 	p7zip-plugins \
 	pipx \
 	procs \
+	podman-bootc \
+	podman-compose \
+	podman-tui \
+	podmansh \
 	scrcpy \
 	screen \
 	showtime \
@@ -111,6 +123,7 @@ RUN rm -f /etc/yum.repos.d/_copr:copr.fedorainfracloud.org:phracek:PyCharm.repo 
     rm -f /etc/yum.repos.d/execat-mutter-performance.repo && \
     rm -f /etc/yum.repos.d/github.repo && \
     rm -f /etc/yum.repos.d/vscode.repo && \
+    rm -f /etc/yum.repos.d/chronoscrat-devpod.repo && \
     rm -f /etc/yum.repos.d/wojnilowicz-ungoogled-chromium.repo && \
     rm -f /etc/xdg/autostart/org.gnome.Software.desktop && \
     systemctl enable flatpak-add-flathub-repo.service && \

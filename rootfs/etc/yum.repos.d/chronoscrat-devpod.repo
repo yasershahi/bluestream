@@ -1,0 +1,10 @@
+[copr:copr.fedorainfracloud.org:chronoscrat:devpod]
+name=Copr repo for devpod owned by chronoscrat
+baseurl=https://download.copr.fedorainfracloud.org/results/chronoscrat/devpod/fedora-$releasever-$basearch/
+type=rpm-md
+skip_if_unavailable=True
+gpgcheck=1
+gpgkey=https://download.copr.fedorainfracloud.org/results/chronoscrat/devpod/pubkey.gpg
+repo_gpgcheck=0
+enabled=1
+enabled_metadata=1
