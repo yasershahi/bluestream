@@ -13,11 +13,14 @@ RUN dnf install -y https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-rele
 RUN dnf install -y \
 	aria2 \
 	adcli \
+	bat \
 	bcc \
 	btop \
 	code \
 	curl \
 	dnf-utils \
+	duf \
+	eza \
 	fastfetch \
 	ffmpegthumbnailer \
 	fish \
@@ -32,10 +35,12 @@ RUN dnf install -y \
 	gvfs-nfs \
 	heif-pixbuf-loader \
 	htop \
+	httpie \
 	iftop \
 	ifuse \
 	ibm-plex-mono-fonts \
 	iotop \
+	jq \
 	libimobiledevice \
 	libsss_autofs \
 	libxcrypt-compat \
@@ -47,14 +52,17 @@ RUN dnf install -y \
 	p7zip \
 	p7zip-plugins \
 	pipx \
+	procs \
 	scrcpy \
 	screen \
 	strace \
 	subversion \
 	tailscale \
 	telegram-desktop \
+	tldr \
 	tmux \
 	traceroute \
+	tokei \
 	unrar \
 	ungoogled-chromium \
 	wl-clipboard \
