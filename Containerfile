@@ -41,14 +41,19 @@ RUN dnf install -y \
 	ifuse \
 	ibm-plex-mono-fonts \
 	iotop \
+	iptables-libs \
 	jq \
 	libimobiledevice \
 	libsss_autofs \
 	libxcrypt-compat \
+	libnetfilter_conntrack \
+	libnfnetlink \
+	libnftnl \
 	lm_sensors \
 	net-tools \
 	nmap \
 	neovim \
+	nftables \
 	nss-tools \
 	p7zip \
 	p7zip-plugins \
