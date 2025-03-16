@@ -57,6 +57,9 @@ RUN dnf install -y \
 	screen \
 	showtime \
 	strace \
+	sstp-client \
+	NetworkManager-sstp \
+	NetworkManager-sstp-gnome \
 	subversion \
 	tailscale \
 	telegram-desktop \
