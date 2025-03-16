@@ -55,6 +55,7 @@ RUN dnf install -y \
 	procs \
 	scrcpy \
 	screen \
+	showtime \
 	strace \
 	subversion \
 	tailscale \
