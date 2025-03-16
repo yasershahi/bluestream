@@ -16,7 +16,6 @@ RUN dnf install -y \
 	bat \
 	bcc \
 	btop \
-	cloudflare-warp \
 	code \
 	curl \
 	dnf-utils \
@@ -112,7 +111,6 @@ RUN rm -f /etc/yum.repos.d/_copr:copr.fedorainfracloud.org:phracek:PyCharm.repo 
     rm -f /etc/yum.repos.d/execat-mutter-performance.repo && \
     rm -f /etc/yum.repos.d/github.repo && \
     rm -f /etc/yum.repos.d/vscode.repo && \
-    rm -f /etc/yum.repos.d/cloudflare-warp.repo && \
     rm -f /etc/yum.repos.d/wojnilowicz-ungoogled-chromium.repo && \
     rm -f /etc/xdg/autostart/org.gnome.Software.desktop && \
     systemctl enable flatpak-add-flathub-repo.service && \
