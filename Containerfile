@@ -66,7 +66,6 @@ RUN dnf install -y \
 	p7zip-plugins \
 	pipx \
 	procs \
-	podman-bootc \
 	podman-compose \
 	podman-tui \
 	podmansh \
