@@ -9,9 +9,6 @@ COPY cosign.pub /etc/pki/containers/
 RUN dnf install -y gcc make libxcrypt-compat
 RUN dnf install -y https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
 
-# Brave Browser
-RUN dnf install -y brave-browser
-
 # Additional Packages
 RUN dnf install -y \
 	tailscale \
@@ -39,7 +36,8 @@ RUN dnf install -y \
 	heif-pixbuf-loader \
 	pipx \
 	subversion \
-	zstd
+	zstd \
+	ungoogled-chromium
 
 # Patch Mutter
 RUN dnf reinstall -y mutter --repo copr:copr.fedorainfracloud.org:execat:mutter-performance
@@ -74,7 +72,7 @@ RUN rm -f /etc/yum.repos.d/_copr:copr.fedorainfracloud.org:phracek:PyCharm.repo 
     rm -f /etc/yum.repos.d/execat-mutter-performance.repo && \
     rm -f /etc/yum.repos.d/github.repo && \
     rm -f /etc/yum.repos.d/vscode.repo && \
-    rm -f /etc/yum.repos.d/brave-browser.repo && \
+    rm -f /etc/yum.repos.d/wojnilowicz-ungoogled-chromium.repo && \
     rm -f /etc/xdg/autostart/org.gnome.Software.desktop && \
     systemctl enable flatpak-add-flathub-repo.service && \
     systemctl enable flatpak-replace-fedora-apps.service && \
