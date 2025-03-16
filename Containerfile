@@ -65,6 +65,7 @@ RUN dnf install -y \
 	p7zip \
 	p7zip-plugins \
 	pipx \
+	plexmediaserver \
 	procs \
 	podman-compose \
 	podman-tui \
@@ -122,6 +123,7 @@ RUN rm -f /etc/yum.repos.d/_copr:copr.fedorainfracloud.org:phracek:PyCharm.repo 
     rm -f /etc/yum.repos.d/execat-mutter-performance.repo && \
     rm -f /etc/yum.repos.d/github.repo && \
     rm -f /etc/yum.repos.d/vscode.repo && \
+    rm -f /etc/yum.repos.d/plex.repo && \
     rm -f /etc/yum.repos.d/chronoscrat-devpod.repo && \
     rm -f /etc/yum.repos.d/wojnilowicz-ungoogled-chromium.repo && \
     rm -f /etc/xdg/autostart/org.gnome.Software.desktop && \
