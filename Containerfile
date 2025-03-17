@@ -113,7 +113,7 @@ RUN dnf install -y --allowerasing \
 
 # H/W Video Acceleration
 RUN dnf install -y \
-	intel-vaapi-drive \
+	intel-vaapi-driver \
 	libva \
 	libva-utils \
 	libva-intel-media-driver \
