@@ -89,6 +89,9 @@ RUN dnf install -y \
 	yt-dlp \
 	zstd
 
+# Install Plex Media Server
+RUN dnf install -y https://downloads.plex.tv/plex-media-server-new/1.41.5.9522-a96edc606/redhat/plexmediaserver-1.41.5.9522-a96edc606.x86_64.rpm
+
 # Patch Mutter
 RUN dnf reinstall -y mutter --repo copr:copr.fedorainfracloud.org:execat:mutter-performance
 
