@@ -95,7 +95,6 @@ RUN dnf install -y --allowerasing \
 	ffmpeg \
 	ffmpeg-libs \
 	PlexHTPC \
-	PlexDesktop \
 	gstreamer1-plugin-libav \
 	gstreamer1-plugin-vaapi \
 	gstreamer1-plugins-bad \
