@@ -109,8 +109,7 @@ RUN dnf install -y --allowerasing \
 	vlc-plugins-all \
 	x264 \
 	pipewire-libs-extra \
-	ffmpegthumbnailer \
-	plexmediaserver
+	ffmpegthumbnailer
 
 # H/W Video Acceleration
 RUN dnf install -y \
@@ -122,6 +121,9 @@ RUN dnf install -y \
 	openh264 \
 	gstreamer1-plugin-openh264 \
 	mozilla-openh264
+
+# Install Plex Media Server without triggering the systemd check
+RUN dnf install -y --setopt=install_weak_deps=False --setopt=skip_broken plexmediaserver || true
 
 # Patch Mutter
 RUN dnf reinstall -y mutter --repo copr:copr.fedorainfracloud.org:execat:mutter-performance
