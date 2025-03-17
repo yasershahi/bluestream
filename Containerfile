@@ -123,7 +123,7 @@ RUN dnf install -y \
 	mozilla-openh264
 
 # Install Plex Media Server without triggering the systemd check
-RUN dnf install -y --setopt=install_weak_deps=False --setopt=skip_broken plexmediaserver || true
+RUN dnf install -y --nobest --setopt=install_weak_deps=False plexmediaserver || true
 
 # Patch Mutter
 RUN dnf reinstall -y mutter --repo copr:copr.fedorainfracloud.org:execat:mutter-performance
