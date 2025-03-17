@@ -106,7 +106,12 @@ RUN dnf install -y --allowerasing \
 	spotify-client \
 	spotify-ffmpeg \
 	vlc \
-	vlc-plugins-all \
+	vlc-plugin-ffmpeg \
+	vlc-plugin-fluidsynth \
+	vlc-plugin-gnome \
+	vlc-plugin-gstreamer \
+	vlc-plugins-base \
+	vlc-plugins-extra \
 	x264 \
 	x265 \
 	pipewire-libs-extra \
