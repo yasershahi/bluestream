@@ -6,19 +6,6 @@ FROM quay.io/fedora/fedora-silverblue:${FEDORA_MAJOR_VERSION}
 COPY rootfs/ /
 COPY cosign.pub /etc/pki/containers/
 
-# Create necessary directories for systemd
-RUN mkdir -p /etc/systemd/system/plexmediaserver.service.d
-RUN mkdir -p /run/systemd/system
-
-# Create a dummy systemd service
-RUN echo -e "[Unit]\nDescription=Dummy service for Plex\n\n[Service]\nType=simple\nExecStart=/bin/true\n\n[Install]\nWantedBy=multi-user.target" > /etc/systemd/system/plexmediaserver.service
-
-# Create a fake systemctl command
-RUN echo -e "#!/bin/bash\nexit 0" > /usr/bin/systemctl && chmod +x /usr/bin/systemctl
-
-# Install Plex Media Server
-RUN dnf install -y --setopt=install_weak_deps=False plexmediaserver || true
-
 # Additional Packages
 RUN dnf install -y \
 	aria2 \
@@ -123,7 +110,9 @@ RUN dnf install -y --allowerasing \
 	x264 \
 	x265 \
 	pipewire-libs-extra \
-	ffmpegthumbnailer
+	ffmpegthumbnailer \
+	mkvtoolnix \
+	mkvtoolnix-gui
 
 # H/W Video Acceleration
 RUN dnf install -y \
@@ -148,7 +137,6 @@ RUN rm -f /etc/yum.repos.d/_copr:copr.fedorainfracloud.org:phracek:PyCharm.repo 
     rm -f /etc/yum.repos.d/vscode.repo && \
     rm -f /etc/yum.repos.d/fedora-multimedia.repo && \
     rm -f /etc/yum.repos.d/chronoscrat-devpod.repo && \
-    rm -f /etc/yum/repos.d/plex.repo && \
     rm -f /etc/yum.repos.d/wojnilowicz-ungoogled-chromium.repo && \
     rm -f /etc/xdg/autostart/org.gnome.Software.desktop && \
     systemctl enable flatpak-add-flathub-repo.service && \
