@@ -6,10 +6,6 @@ FROM quay.io/fedora/fedora-silverblue:${FEDORA_MAJOR_VERSION}
 COPY rootfs/ /
 COPY cosign.pub /etc/pki/containers/
 
-# Add RPM Fusion
-RUN dnf install -y gcc make libxcrypt-compat
-RUN dnf install -y https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
-
 # Additional Packages
 RUN dnf install -y \
 	aria2 \
@@ -30,12 +26,12 @@ RUN dnf install -y \
 	duf \
 	eza \
 	fastfetch \
-	ffmpegthumbnailer \
 	fish \
 	firewall-config \
 	flatpak-builder \
 	fuse-encfs \
 	fzf \
+	gcc \
 	gh \
 	git-credential-oauth \
 	gnome-themes-extra \
@@ -58,6 +54,7 @@ RUN dnf install -y \
 	libnfnetlink \
 	libnftnl \
 	lm_sensors \
+	make \
 	net-tools \
 	nmap \
 	neovim \
@@ -79,42 +76,54 @@ RUN dnf install -y \
 	NetworkManager-sstp-gnome \
 	subversion \
 	tailscale \
-	telegram-desktop \
 	tldr \
 	tmux \
 	traceroute \
 	tokei \
-	unrar \
+	rar \
 	ungoogled-chromium \
 	wl-clipboard \
 	yt-dlp \
 	zstd
 
-# Patch Mutter
-RUN dnf reinstall -y mutter --repo copr:copr.fedorainfracloud.org:execat:mutter-performance
-
-# Codecs
+#Multimedia
 RUN dnf install -y --allowerasing \
-        ffmpeg \
-        gstreamer1-plugin-libav \
-        gstreamer1-plugins-bad-free-extras \
-        gstreamer1-plugins-bad-freeworld \
-        gstreamer1-plugins-ugly \
-        gstreamer1-vaapi \
-        mesa-va-drivers-freeworld \
-        mesa-vdpau-drivers-freeworld \
-        libva-intel-driver
+	HandBrake-gui \
+	HandBrake-cli \
+	makemkv \
+	libdvdcss \
+	ffmpeg \
+	ffmpeg-libs \
+	PlexHTPC \
+	PlexDesktop \
+	gstreamer1-plugin-libav \
+	gstreamer1-plugin-vaapi \
+	gstreamer1-plugins-bad \
+	gstreamer1-plugins-bad-fluidsynth \
+	gstreamer1-plugins-ugly \
+	heif-pixbuf-loader \
+	mpv \
+	spotify-client \
+	spotify-ffmpeg \
+	vlc \
+	vlc-plugins-all \
+	x264 \
+	pipewire-libs-extra \
+	ffmpegthumbnailer
 
 # H/W Video Acceleration
 RUN dnf install -y \
-	ffmpeg-libs \
+	intel-vaapi-drive \
 	libva \
 	libva-utils \
+	libva-intel-media-driver \
+	mesa-va-drivers \
 	openh264 \
 	gstreamer1-plugin-openh264 \
 	mozilla-openh264
 
-RUN dnf config-manager setopt fedora-cisco-openh264.enabled=1
+# Patch Mutter
+RUN dnf reinstall -y mutter --repo copr:copr.fedorainfracloud.org:execat:mutter-performance
 
 # Cleanup & Finalize
 RUN rm -rf /tmp/* /var/*
@@ -123,6 +132,7 @@ RUN rm -f /etc/yum.repos.d/_copr:copr.fedorainfracloud.org:phracek:PyCharm.repo 
     rm -f /etc/yum.repos.d/execat-mutter-performance.repo && \
     rm -f /etc/yum.repos.d/github.repo && \
     rm -f /etc/yum.repos.d/vscode.repo && \
+    rm -f /etc/yum.repos.d/fedora-multimedia.repo && \
     rm -f /etc/yum.repos.d/chronoscrat-devpod.repo && \
     rm -f /etc/yum.repos.d/wojnilowicz-ungoogled-chromium.repo && \
     rm -f /etc/xdg/autostart/org.gnome.Software.desktop && \
