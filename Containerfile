@@ -1,37 +1,6 @@
 ARG FEDORA_MAJOR_VERSION=41
 
-# Builder stage
-FROM quay.io/fedora/fedora:${FEDORA_MAJOR_VERSION} AS builder
-
-WORKDIR /tmp
-RUN <<-EOT sh
-	set -eu
-
-	# Install required packages
-	dnf install -y git xz wget rpm-build rpmdevtools --setopt=install_weak_deps=False
-
-	# Download Plex Media Server RPM
-	wget https://downloads.plex.tv/plex-media-server-new/1.41.5.9522-a96edc606/redhat/plexmediaserver-1.41.5.9522-a96edc606.x86_64.rpm
-
-	# Extract the RPM
-	rpm2cpio plexmediaserver-1.41.5.9522-a96edc606.x86_64.rpm | cpio -idmv
-
-	# Create necessary directories for installation
-	mkdir -p /usr/lib/plexmediaserver
-	mkdir -p /lib/systemd/system
-
-	# Copy extracted files to the appropriate locations
-	cp -a ./usr/lib/plexmediaserver/* /usr/lib/plexmediaserver/
-	cp -a ./lib/systemd/system/plexmediaserver.service /lib/systemd/system/
-
-EOT
-
-# Final stage
 FROM quay.io/fedora/fedora-silverblue:${FEDORA_MAJOR_VERSION}
-
-# Copy the installed files from the builder stage
-COPY --from=builder /usr/lib/plexmediaserver /usr/lib/plexmediaserver
-COPY --from=builder /lib/systemd/system/plexmediaserver.service /lib/systemd/system/
 
 # Copy Files
 COPY rootfs/ /
