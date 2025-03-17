@@ -16,15 +16,19 @@ RUN <<-EOT sh
 	# Extract the RPM
 	rpm2cpio plexmediaserver-1.41.5.9522-a96edc606.x86_64.rpm | cpio -idmv
 
-	# Remove the pre-install script from the spec file
-	sed -i '/^%pre/,/^%post/d plexmediaserver.spec'
+	# Check if the spec file exists and remove the pre-install script from the spec file
+	if [ -f plexmediaserver.spec ]; then
+		sed -i '/^%pre/,/^%post/d plexmediaserver.spec'
+	else
+		echo "plexmediaserver.spec not found!"
+		exit 1
+	fi
 
 	# Build the modified RPM
 	rpmbuild -bb plexmediaserver.spec
 EOT
 
 # Final stage
-
 FROM quay.io/fedora/fedora-silverblue:${FEDORA_MAJOR_VERSION}
 
 COPY rootfs/ /
