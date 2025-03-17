@@ -16,26 +16,26 @@ RUN <<-EOT sh
 	# Extract the RPM
 	rpm2cpio plexmediaserver-1.41.5.9522-a96edc606.x86_64.rpm | cpio -idmv
 
-	# Check if the spec file exists and remove the pre-install script from the spec file
-	if [ -f plexmediaserver.spec ]; then
-		sed -i '/^%pre/,/^%post/d plexmediaserver.spec'
-	else
-		echo "plexmediaserver.spec not found!"
-		exit 1
-	fi
+	# Create necessary directories for installation
+	mkdir -p /usr/lib/plexmediaserver
+	mkdir -p /lib/systemd/system
 
-	# Build the modified RPM
-	rpmbuild -bb plexmediaserver.spec
+	# Copy extracted files to the appropriate locations
+	cp -a ./usr/lib/plexmediaserver/* /usr/lib/plexmediaserver/
+	cp -a ./lib/systemd/system/plexmediaserver.service /lib/systemd/system/
+
 EOT
 
 # Final stage
 FROM quay.io/fedora/fedora-silverblue:${FEDORA_MAJOR_VERSION}
 
+# Copy the installed files from the builder stage
+COPY --from=builder /usr/lib/plexmediaserver /usr/lib/plexmediaserver
+COPY --from=builder /lib/systemd/system/plexmediaserver.service /lib/systemd/system/
+
+# Copy Files
 COPY rootfs/ /
 COPY cosign.pub /etc/pki/containers/
-
-# Copy the built RPM from the builder stage
-COPY --from=builder /tmp/rpmbuild/RPMS/x86_64/plexmediaserver-*.rpm /tmp/
 
 # Add RPM Fusion
 RUN dnf install -y gcc make libxcrypt-compat
@@ -120,9 +120,6 @@ RUN dnf install -y \
 	wl-clipboard \
 	yt-dlp \
 	zstd
-
-# Install Plex Media Server
-RUN dnf install -y /tmp/plexmediaserver-*.rpm
 
 # Patch Mutter
 RUN dnf reinstall -y mutter --repo copr:copr.fedorainfracloud.org:execat:mutter-performance
