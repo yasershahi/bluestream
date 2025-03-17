@@ -1,9 +1,37 @@
 ARG FEDORA_MAJOR_VERSION=41
 
+# Builder stage
+FROM quay.io/fedora/fedora:${FEDORA_MAJOR_VERSION} AS builder
+
+WORKDIR /tmp
+RUN <<-EOT sh
+	set -eu
+
+	# Install required packages
+	dnf install -y git xz wget rpm-build rpmdevtools --setopt=install_weak_deps=False
+
+	# Download Plex Media Server RPM
+	wget https://downloads.plex.tv/plex-media-server-new/1.41.5.9522-a96edc606/redhat/plexmediaserver-1.41.5.9522-a96edc606.x86_64.rpm
+
+	# Extract the RPM
+	rpm2cpio plexmediaserver-1.41.5.9522-a96edc606.x86_64.rpm | cpio -idmv
+
+	# Remove the pre-install script from the spec file
+	sed -i '/^%pre/,/^%post/d plexmediaserver.spec'
+
+	# Build the modified RPM
+	rpmbuild -bb plexmediaserver.spec
+EOT
+
+# Final stage
+
 FROM quay.io/fedora/fedora-silverblue:${FEDORA_MAJOR_VERSION}
 
 COPY rootfs/ /
 COPY cosign.pub /etc/pki/containers/
+
+# Copy the built RPM from the builder stage
+COPY --from=builder /tmp/rpmbuild/RPMS/x86_64/plexmediaserver-*.rpm /tmp/
 
 # Add RPM Fusion
 RUN dnf install -y gcc make libxcrypt-compat
@@ -90,7 +118,7 @@ RUN dnf install -y \
 	zstd
 
 # Install Plex Media Server
-RUN dnf install -y https://downloads.plex.tv/plex-media-server-new/1.41.5.9522-a96edc606/redhat/plexmediaserver-1.41.5.9522-a96edc606.x86_64.rpm
+RUN dnf install -y /tmp/plexmediaserver-*.rpm
 
 # Patch Mutter
 RUN dnf reinstall -y mutter --repo copr:copr.fedorainfracloud.org:execat:mutter-performance
