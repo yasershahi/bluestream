@@ -122,7 +122,8 @@ RUN dnf install -y \
 	gstreamer1-plugin-openh264 \
 	mozilla-openh264
 
-# Install Plex Media Server without triggering the systemd check
+# Install Plex Media Server
+ENV SYSTEMD=1
 RUN dnf install -y --nobest --setopt=install_weak_deps=False plexmediaserver || true
 
 # Patch Mutter
