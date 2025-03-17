@@ -109,7 +109,8 @@ RUN dnf install -y --allowerasing \
 	vlc-plugins-all \
 	x264 \
 	pipewire-libs-extra \
-	ffmpegthumbnailer
+	ffmpegthumbnailer \
+	plexmediaserver
 
 # H/W Video Acceleration
 RUN dnf install -y \
@@ -134,6 +135,7 @@ RUN rm -f /etc/yum.repos.d/_copr:copr.fedorainfracloud.org:phracek:PyCharm.repo 
     rm -f /etc/yum.repos.d/vscode.repo && \
     rm -f /etc/yum.repos.d/fedora-multimedia.repo && \
     rm -f /etc/yum.repos.d/chronoscrat-devpod.repo && \
+    rm -f /etc/yum/repos.d/plex.repo && \
     rm -f /etc/yum.repos.d/wojnilowicz-ungoogled-chromium.repo && \
     rm -f /etc/xdg/autostart/org.gnome.Software.desktop && \
     systemctl enable flatpak-add-flathub-repo.service && \
