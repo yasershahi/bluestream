@@ -123,12 +123,13 @@ RUN dnf install -y \
 	mozilla-openh264
 
 # Install Plex Media Server
-ENV SYSTEMD=1
 RUN mkdir -p /etc/systemd/system/plexmediaserver.service.d
+
 RUN echo -e "[Unit]\nDescription=Dummy service for Plex\n\n[Service]\nType=simple\nExecStart=/bin/true\n\n[Install]\nWantedBy=multi-user.target" > /etc/systemd/system/plexmediaserver.service
 
+RUN mkdir -p /run/systemd/system
+RUN ln -s /run/systemd/system /etc/systemd/system
 RUN dnf install -y --setopt=install_weak_deps=False plexmediaserver || true
-RUN systemctl enable plexmediaserver.service
 
 # Patch Mutter
 RUN dnf reinstall -y mutter --repo copr:copr.fedorainfracloud.org:execat:mutter-performance
