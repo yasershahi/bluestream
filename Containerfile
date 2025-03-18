@@ -6,7 +6,7 @@ FROM quay.io/fedora/fedora-silverblue:${FEDORA_MAJOR_VERSION}
 COPY rootfs/ /
 COPY cosign.pub /etc/pki/containers/
 
-# Fix /opt directory
+# Fix /opt directory by ublue project
 RUN set -euo pipefail && \
     echo "=== Starting /opt directory fix ===" && \
     mkdir -p /var/opt /usr/lib/opt && \
@@ -18,7 +18,9 @@ RUN set -euo pipefail && \
     done && \
     echo "=== Fix completed ==="
 
-RUN dnf install -y cloudflare-warp
+# Add RPM Fusion
+RUN dnf install -y gcc make libxcrypt-compat
+RUN dnf install -y https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
 
 # Additional System Packages
 RUN dnf install -y \
@@ -57,7 +59,7 @@ RUN dnf install -y \
 	tldr \
 	tmux \
 	tokei \
-	rar \
+	unrar \
 	wl-clipboard \
 	yt-dlp \
 	zstd
@@ -107,47 +109,34 @@ RUN dnf install -y \
 # H/W Video Acceleration
 RUN dnf install -y --setopt=install_weak_deps=False \
 	gstreamer1-plugin-openh264 \
-	intel-vaapi-driver \
 	libva \
-	libva-intel-media-driver \
+        libva-intel-driver \
 	libva-utils \
-	mesa-va-drivers \
+	mesa-va-drivers-freeworld \
 	mozilla-openh264 \
 	openh264
+
+RUN dnf config-manager setopt fedora-cisco-openh264.enabled=1
 
 # Multimedia
 RUN dnf install -y --allowerasing --setopt=install_weak_deps=False \
 	ffmpeg \
 	ffmpeg-libs \
 	ffmpegthumbnailer \
-	flexiblas-openblas-serial \
-	HandBrake-cli \
-	HandBrake-gui \
 	gstreamer1-plugin-libav \
-	gstreamer1-plugin-vaapi \
-	gstreamer1-plugins-bad \
-	gstreamer1-plugins-bad-fluidsynth \
-	gstreamer1-plugins-good \
-	gstreamer1-plugins-good-extras \
-	gstreamer1-plugins-good-gtk \
-	gstreamer1-plugins-good-qt6 \
-	gstreamer1-plugins-ugly \
+        gstreamer1-plugins-bad-free-extras \
+        gstreamer1-plugins-bad-freeworld \
+        gstreamer1-vaapi \
 	heif-pixbuf-loader \
-	mkvtoolnix \
-	mkvtoolnix-gui \
 	mpv \
 	pipewire-libs-extra \
 	showtime \
-	spotify-client \
-	spotify-ffmpeg \
 	vlc \
 	vlc-plugin-ffmpeg \
 	vlc-plugin-gnome \
 	vlc-plugin-gstreamer \
 	vlc-plugins-base \
-	vlc-plugins-extra \
-	x264 \
-	x265
+	vlc-plugins-extra
 
 # Patch Mutter
 RUN dnf reinstall -y mutter --repo copr:copr.fedorainfracloud.org:execat:mutter-performance
@@ -159,7 +148,6 @@ RUN rm -f /etc/yum.repos.d/_copr:copr.fedorainfracloud.org:phracek:PyCharm.repo 
     rm -f /etc/yum.repos.d/execat-mutter-performance.repo && \
     rm -f /etc/yum.repos.d/github.repo && \
     rm -f /etc/yum.repos.d/vscode.repo && \
-    rm -f /etc/yum.repos.d/fedora-multimedia.repo && \
     rm -f /etc/yum.repos.d/chronoscrat-devpod.repo && \
     rm -f /etc/yum.repos.d/cloudflare-warp.repo && \
     rm -f /etc/yum.repos.d/wojnilowicz-ungoogled-chromium.repo && \
