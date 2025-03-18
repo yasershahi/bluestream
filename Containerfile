@@ -103,7 +103,6 @@ RUN dnf install -y --allowerasing \
 	spotify-ffmpeg \
 	vlc \
 	vlc-plugin-ffmpeg \
-	vlc-plugin-fluidsynth \
 	vlc-plugin-gnome \
 	vlc-plugin-gstreamer \
 	vlc-plugins-base \
