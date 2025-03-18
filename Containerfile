@@ -36,13 +36,11 @@ RUN dnf install -y \
 	git-credential-oauth \
 	gnome-themes-extra \
 	gnome-tweaks \
-	google-noto-fonts-all \
 	gvfs-nfs \
 	htop \
 	httpie \
 	iftop \
 	ifuse \
-	ibm-plex-mono-fonts \
 	iotop \
 	iptables-libs \
 	jq \
@@ -82,6 +80,7 @@ RUN dnf install -y \
 	ungoogled-chromium \
 	wl-clipboard \
 	yt-dlp \
+	libproxy-bin \
 	zstd
 
 # H/W Video Acceleration
@@ -95,32 +94,39 @@ RUN dnf install -y \
 	gstreamer1-plugin-openh264 \
 	mozilla-openh264
 
-#Multimedia
-RUN dnf install -y --allowerasing \
-	HandBrake-gui \
-	libdvdcss \
+# Multimedia
+RUN dnf install -y --allowerasing --setopt=install_weak_deps=False \
 	ffmpeg \
 	ffmpeg-libs \
-	PlexHTPC \
+	ffmpegthumbnailer \
+	HandBrake-gui \
 	gstreamer1-plugin-libav \
 	gstreamer1-plugin-vaapi \
 	gstreamer1-plugins-bad \
 	gstreamer1-plugins-bad-fluidsynth \
+	gstreamer1-plugins-good \
+	gstreamer1-plugins-good-extras \
+	gstreamer1-plugins-good-gtk \
+	gstreamer1-plugins-good-qt6 \
 	gstreamer1-plugins-ugly \
 	heif-pixbuf-loader \
+	mkvtoolnix \
+	mkvtoolnix-gui \
 	mpv \
+	PlexHTPC \
+	pipewire-libs-extra \
+	showtime \
 	spotify-client \
 	spotify-ffmpeg \
 	vlc \
 	vlc-plugin-ffmpeg \
 	vlc-plugin-gnome \
+	vlc-plugin-gstreamer \
+	vlc-plugins-base \
+	vlc-plugins-extra \
 	x264 \
 	x265 \
-	pipewire-libs-extra \
-	ffmpegthumbnailer \
-	mkvtoolnix \
-	showtime \
-	mkvtoolnix-gui
+	flexiblas-openblas-serial
 
 # Patch Mutter
 RUN dnf reinstall -y mutter --repo copr:copr.fedorainfracloud.org:execat:mutter-performance
