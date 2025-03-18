@@ -69,7 +69,6 @@ RUN dnf install -y \
 	podmansh \
 	scrcpy \
 	screen \
-	showtime \
 	strace \
 	sstp-client \
 	NetworkManager-sstp \
@@ -89,8 +88,6 @@ RUN dnf install -y \
 #Multimedia
 RUN dnf install -y --allowerasing \
 	HandBrake-gui \
-	HandBrake-cli \
-	makemkv \
 	libdvdcss \
 	ffmpeg \
 	ffmpeg-libs \
@@ -116,6 +113,7 @@ RUN dnf install -y --allowerasing \
 	pipewire-libs-extra \
 	ffmpegthumbnailer \
 	mkvtoolnix \
+	showtime \
 	mkvtoolnix-gui
 
 # H/W Video Acceleration
