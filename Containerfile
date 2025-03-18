@@ -84,7 +84,7 @@ RUN dnf install -y \
 	zstd
 
 # H/W Video Acceleration
-RUN dnf install -y \
+RUN dnf install -y --setopt=install_weak_deps=False \
 	intel-vaapi-driver \
 	libva \
 	libva-utils \
