@@ -6,7 +6,19 @@ FROM quay.io/fedora/fedora-silverblue:${FEDORA_MAJOR_VERSION}
 COPY rootfs/ /
 COPY cosign.pub /etc/pki/containers/
 
-RUN dnf install -y cloudflare-warp ... > /var/log/dnf_install.log 2>&1 || (cat /var/log/dnf_install.log && exit 1)
+# Fix /opt directory
+RUN set -euo pipefail && \
+    echo "=== Starting /opt directory fix ===" && \
+    mkdir -p /var/opt /usr/lib/opt && \
+    for dir in /var/opt/*/; do \
+        [ -d "$dir" ] || continue; \
+        dirname=$(basename "$dir"); \
+        mv "$dir" "/usr/lib/opt/$dirname" || { echo "Failed to move $dir"; exit 1; }; \
+        echo "L+ /var/opt/$dirname - - - - /usr/lib/opt/$dirname" >> /usr/lib/tmpfiles.d/opt-fix.conf; \
+    done && \
+    echo "=== Fix completed ==="
+
+RUN dnf install -y cloudflare-warp
 
 # Additional System Packages
 RUN dnf install -y \
