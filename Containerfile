@@ -6,43 +6,26 @@ FROM quay.io/fedora/fedora-silverblue:${FEDORA_MAJOR_VERSION}
 COPY rootfs/ /
 COPY cosign.pub /etc/pki/containers/
 
-# Additional Packages
+# Additional System Packages
 RUN dnf install -y \
 	aria2 \
 	adcli \
 	bat \
-	bcc \
 	btop \
-	code \
-	containerd.io \
 	curl \
-	devpod \
-	distrobox \
-	docker-ce \
-	docker-ce-cli \
-	docker-buildx-plugin \
-	docker-compose-plugin \
 	dnf-utils \
 	duf \
 	eza \
 	fastfetch \
 	fish \
-	firewall-config \
-	flatpak-builder \
 	fuse-encfs \
 	fzf \
-	gcc \
-	gh \
-	git-credential-oauth \
 	gnome-themes-extra \
 	gnome-tweaks \
 	gvfs-nfs \
 	htop \
-	httpie \
-	iftop \
 	ifuse \
 	iotop \
-	iptables-libs \
 	jq \
 	libimobiledevice \
 	libsss_autofs \
@@ -51,54 +34,80 @@ RUN dnf install -y \
 	libnfnetlink \
 	libnftnl \
 	lm_sensors \
-	make \
-	net-tools \
-	nmap \
-	neovim \
-	nftables \
 	nss-tools \
 	p7zip \
 	p7zip-plugins \
-	pipx \
 	procs \
+	screen \
+	strace \
+	tldr \
+	tmux \
+	tokei \
+	rar \
+	wl-clipboard \
+	yt-dlp \
+	zstd
+
+# Developer Tools
+RUN dnf install -y \
+	bcc \
+	code \
+	devpod \
+	distrobox \
+	flatpak-builder \
+	gcc \
+	gh \
+	git \
+	git-credential-oauth \
+	make \
+	neovim \
+	pipx \
 	podman-compose \
 	podman-tui \
 	podmansh \
 	scrcpy \
-	screen \
-	strace \
-	sstp-client \
+	subversion
+
+# Web Browsers
+RUN dnf install -y \
+	ungoogled-chromium
+
+# Networking Tools
+RUN dnf install -y \
+	cloudflare-warp \
+	firewall-config \
+	httpie \
+	iftop \
+	iptables-libs \
+	libproxy-bin \
+	nmap \
+	net-tools \
+	nftables \
+	nss-tools \
 	NetworkManager-sstp \
 	NetworkManager-sstp-gnome \
-	subversion \
+	sstp-client \
 	tailscale \
-	tldr \
-	tmux \
-	traceroute \
-	tokei \
-	rar \
-	ungoogled-chromium \
-	wl-clipboard \
-	yt-dlp \
-	libproxy-bin \
-	zstd
+	traceroute
 
 # H/W Video Acceleration
 RUN dnf install -y --setopt=install_weak_deps=False \
+	gstreamer1-plugin-openh264 \
 	intel-vaapi-driver \
 	libva \
-	libva-utils \
 	libva-intel-media-driver \
+	libva-utils \
 	mesa-va-drivers \
-	openh264 \
-	gstreamer1-plugin-openh264 \
-	mozilla-openh264
+	mozilla-openh264 \
+	openh264
 
 # Multimedia
 RUN dnf install -y --allowerasing --setopt=install_weak_deps=False \
 	ffmpeg \
 	ffmpeg-libs \
 	ffmpegthumbnailer \
+	flexiblas-openblas-serial \
+	HandBrake-cli \
 	HandBrake-gui \
 	gstreamer1-plugin-libav \
 	gstreamer1-plugin-vaapi \
@@ -113,7 +122,6 @@ RUN dnf install -y --allowerasing --setopt=install_weak_deps=False \
 	mkvtoolnix \
 	mkvtoolnix-gui \
 	mpv \
-	PlexHTPC \
 	pipewire-libs-extra \
 	showtime \
 	spotify-client \
@@ -125,8 +133,7 @@ RUN dnf install -y --allowerasing --setopt=install_weak_deps=False \
 	vlc-plugins-base \
 	vlc-plugins-extra \
 	x264 \
-	x265 \
-	flexiblas-openblas-serial
+	x265
 
 # Patch Mutter
 RUN dnf reinstall -y mutter --repo copr:copr.fedorainfracloud.org:execat:mutter-performance
@@ -140,6 +147,7 @@ RUN rm -f /etc/yum.repos.d/_copr:copr.fedorainfracloud.org:phracek:PyCharm.repo 
     rm -f /etc/yum.repos.d/vscode.repo && \
     rm -f /etc/yum.repos.d/fedora-multimedia.repo && \
     rm -f /etc/yum.repos.d/chronoscrat-devpod.repo && \
+    rm -f /etc/yum.repos.d/cloudflare-warp.repo && \
     rm -f /etc/yum.repos.d/wojnilowicz-ungoogled-chromium.repo && \
     rm -f /etc/xdg/autostart/org.gnome.Software.desktop && \
     systemctl enable flatpak-add-flathub-repo.service && \
