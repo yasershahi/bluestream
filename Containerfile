@@ -38,7 +38,6 @@ RUN dnf install -y \
 	gnome-tweaks \
 	google-noto-fonts-all \
 	gvfs-nfs \
-	heif-pixbuf-loader \
 	htop \
 	httpie \
 	iftop \
@@ -85,6 +84,17 @@ RUN dnf install -y \
 	yt-dlp \
 	zstd
 
+# H/W Video Acceleration
+RUN dnf install -y \
+	intel-vaapi-driver \
+	libva \
+	libva-utils \
+	libva-intel-media-driver \
+	mesa-va-drivers \
+	openh264 \
+	gstreamer1-plugin-openh264 \
+	mozilla-openh264
+
 #Multimedia
 RUN dnf install -y --allowerasing \
 	HandBrake-gui \
@@ -104,9 +114,6 @@ RUN dnf install -y --allowerasing \
 	vlc \
 	vlc-plugin-ffmpeg \
 	vlc-plugin-gnome \
-	vlc-plugin-gstreamer \
-	vlc-plugins-base \
-	vlc-plugins-extra \
 	x264 \
 	x265 \
 	pipewire-libs-extra \
@@ -114,17 +121,6 @@ RUN dnf install -y --allowerasing \
 	mkvtoolnix \
 	showtime \
 	mkvtoolnix-gui
-
-# H/W Video Acceleration
-RUN dnf install -y \
-	intel-vaapi-driver \
-	libva \
-	libva-utils \
-	libva-intel-media-driver \
-	mesa-va-drivers \
-	openh264 \
-	gstreamer1-plugin-openh264 \
-	mozilla-openh264
 
 # Patch Mutter
 RUN dnf reinstall -y mutter --repo copr:copr.fedorainfracloud.org:execat:mutter-performance
