@@ -45,7 +45,6 @@ RUN dnf install -y \
 	jq \
 	libimobiledevice \
 	libsss_autofs \
-	libxcrypt-compat \
 	libnetfilter_conntrack \
 	libnfnetlink \
 	libnftnl \
@@ -71,11 +70,9 @@ RUN dnf install -y \
 	devpod \
 	distrobox \
 	flatpak-builder \
-	gcc \
 	gh \
 	git \
 	git-credential-oauth \
-	make \
 	neovim \
 	pipx \
 	podman-compose \
@@ -129,7 +126,6 @@ RUN dnf install -y --allowerasing --setopt=install_weak_deps=False \
         gstreamer1-vaapi \
 	heif-pixbuf-loader \
 	mpv \
-	pipewire-libs-extra \
 	showtime \
 	vlc \
 	vlc-plugin-ffmpeg \
