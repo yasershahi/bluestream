@@ -6,6 +6,8 @@ FROM quay.io/fedora/fedora-silverblue:${FEDORA_MAJOR_VERSION}
 COPY rootfs/ /
 COPY cosign.pub /etc/pki/containers/
 
+RUN dnf install -y cloudflare-warp ... > /var/log/dnf_install.log 2>&1 || (cat /var/log/dnf_install.log && exit 1)
+
 # Additional System Packages
 RUN dnf install -y \
 	aria2 \
