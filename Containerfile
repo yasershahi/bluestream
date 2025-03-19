@@ -102,23 +102,34 @@ RUN dnf install -y \
 	traceroute
 
 # H/W Video Acceleration
-RUN dnf install -y \
+RUN dnf install -y --allowerasing \
+	intel-vaapi-driver \
+	libva \
+	libva-intel-media-driver \
+	libvacodec \
 	gstreamer1-plugin-openh264 \
 	mozilla-openh264 \
 	openh264
 
 # Multimedia
 RUN dnf install -y --allowerasing \
-	ffmpeg-free \
+	ffmpeg \
+	ffmpeg-libs \
 	ffmpegthumbnailer \
-	gstreamer1-plugin-libav \
-	gstreamer1-plugins-good \
-	gstreamer1-plugins-bad-free \
-	gstreamer1-plugins-ugly-free \
-	gstreamer1-vaapi \
+	gstreamer1-plugin-libva \
+	gstreamer1-plugins-bad \
+	gstreamer1-plugins-ugly \
+	gstreamer1-plugind-vaapi \
 	heif-pixbuf-loader \
+	mesa-dri-drivers \
+	mesa-libEGL \
+	mesa-libGL \
+	mesa-va-drivers \
 	mpv \
-	showtime
+	pipewire-libs-extra \
+	showtime \
+	x264 \
+	x265
 
 # Patch Mutter
 RUN dnf reinstall -y mutter --repo copr:copr.fedorainfracloud.org:execat:mutter-performance
@@ -132,6 +143,7 @@ RUN rm -f /etc/yum.repos.d/_copr:copr.fedorainfracloud.org:phracek:PyCharm.repo 
     rm -f /etc/yum.repos.d/vscode.repo && \
     rm -f /etc/yum.repos.d/chronoscrat-devpod.repo && \
     rm -f /etc/yum.repos.d/cloudflare-warp.repo && \
+    rm -f /etc/yum.repos.d/fedora-multimedia.repo && \
     rm -f /etc/yum.repos.d/wojnilowicz-ungoogled-chromium.repo && \
     rm -f /etc/xdg/autostart/org.gnome.Software.desktop && \
     systemctl enable flatpak-add-flathub-repo.service && \
