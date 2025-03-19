@@ -112,7 +112,7 @@ RUN dnf install -y --allowerasing \
 	x265
 
 # H/W Video Acceleration
-RUN dnf install -y --allowerasing \
+RUN dnf install -y --allowerasing  --setopt=install_weak_deps=False \
 	intel-vaapi-driver \
 	gstreamer1-plugin-openh264 \
 	mozilla-openh264 \
