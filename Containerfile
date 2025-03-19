@@ -97,6 +97,20 @@ RUN dnf install -y \
 	tailscale \
 	traceroute
 
+# Multimedia
+RUN dnf install -y --allowerasing \
+	ffmpeg \
+	ffmpeg-libs \
+	ffmpegthumbnailer \
+	gstreamer1-plugins-ugly \
+	gstreamer1-plugin-vaapi \
+	heif-pixbuf-loader \
+	mpv \
+	pipewire-libs-extra \
+	showtime \
+	x264 \
+	x265
+
 # H/W Video Acceleration
 RUN dnf install -y --allowerasing \
 	intel-vaapi-driver \
@@ -106,27 +120,13 @@ RUN dnf install -y --allowerasing \
 
 RUN dnf reinstall -y --allowerasing \
 	libva \
-	libva-intel-media-driver
-
-# Multimedia
-RUN dnf install -y --allowerasing \
-	ffmpeg \
-	ffmpeg-libs \
-	ffmpegthumbnailer \
+	libva-intel-media-driver \
 	gstreamer1-plugin-libav \
 	gstreamer1-plugins-bad \
-	gstreamer1-plugins-ugly \
-	gstreamer1-plugind-vaapi \
-	heif-pixbuf-loader \
+	mesa-va-drivers \
 	mesa-dri-drivers \
 	mesa-libEGL \
-	mesa-libGL \
-	mesa-va-drivers \
-	mpv \
-	pipewire-libs-extra \
-	showtime \
-	x264 \
-	x265
+	mesa-libGL
 
 # Patch Mutter
 RUN dnf reinstall -y mutter --repo copr:copr.fedorainfracloud.org:execat:mutter-performance
