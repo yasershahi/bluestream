@@ -134,7 +134,6 @@ RUN dnf install -y --allowerasing \
 	ffmpegthumbnailer \
 	gstreamer1-libav \
         gstreamer1-plugins-bad-freeworld \
-        gstreamer1-plugins-bad-nonfree \
         gstreamer1-plugins-ugly \
         gstreamer1-vaapi \
 	heif-pixbuf-loader \
