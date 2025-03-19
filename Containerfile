@@ -1,26 +1,19 @@
 ARG FEDORA_MAJOR_VERSION=41
-
 FROM quay.io/fedora/fedora-silverblue:${FEDORA_MAJOR_VERSION}
 
 # Copy Files
 COPY rootfs/ /
 COPY cosign.pub /etc/pki/containers/
 
-# Fix /opt directory by ublue project
+# Fix /opt directory (by Universal Blue)
 RUN set -euo pipefail && \
-    echo "=== Starting /opt directory fix ===" && \
     mkdir -p /var/opt /usr/lib/opt && \
     for dir in /var/opt/*/; do \
         [ -d "$dir" ] || continue; \
         dirname=$(basename "$dir"); \
         mv "$dir" "/usr/lib/opt/$dirname" || { echo "Failed to move $dir"; exit 1; }; \
         echo "L+ /var/opt/$dirname - - - - /usr/lib/opt/$dirname" >> /usr/lib/tmpfiles.d/opt-fix.conf; \
-    done && \
-    echo "=== Fix completed ==="
-
-# Add RPM Fusion
-RUN dnf install -y gcc make libxcrypt-compat
-RUN dnf install -y https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
+    done
 
 # Remove Packages
 RUN dnf remove -y \
@@ -33,21 +26,20 @@ RUN dnf remove -y \
 	gnome-tour \
 	gnome-software-rpm-ostree \
 	gnome-classic-session \
-	f41-backgrounds-gnome
+	f41-backgrounds-base \
+	fedora-workstation-backgrounds
 
 # Additional System Packages
 RUN dnf install -y \
 	aria2 \
 	adcli \
 	bat \
-	btop \
 	curl \
 	dnf-utils \
 	duf \
 	eza \
 	fastfetch \
 	fish \
-	fuse-encfs \
 	fzf \
 	gnome-themes-extra \
 	gnome-tweaks \
@@ -56,11 +48,9 @@ RUN dnf install -y \
 	ifuse \
 	iotop \
 	jq \
+	libxcrypt-compat \
 	libimobiledevice \
 	libsss_autofs \
-	libnetfilter_conntrack \
-	libnfnetlink \
-	libnftnl \
 	lm_sensors \
 	nss-tools \
 	p7zip \
@@ -82,13 +72,13 @@ RUN dnf install -y \
 	code \
 	devpod \
 	distrobox \
+	gcc \
 	gh \
 	git \
 	git-credential-oauth \
+	make \
 	neovim \
 	pipx \
-	podman-compose \
-	podmansh \
 	scrcpy \
 	subversion
 
@@ -102,10 +92,8 @@ RUN dnf install -y \
 	firewall-config \
 	httpie \
 	iftop \
-	iptables-libs \
 	nmap \
 	net-tools \
-	nftables \
 	nss-tools \
 	NetworkManager-sstp \
 	NetworkManager-sstp-gnome \
@@ -119,17 +107,16 @@ RUN dnf install -y \
 	mozilla-openh264 \
 	openh264
 
-RUN dnf config-manager setopt fedora-cisco-openh264.enabled=1
-
 # Multimedia
 RUN dnf install -y --allowerasing \
-	ffmpeg \
-	ffmpeg-libs \
+	ffmpeg-free \
 	ffmpegthumbnailer \
-	gstreamer1-libav \
-	gstreamer1-plugins-bad-freeworld \
+	gstreamer1-plugin-libav \
+	gstreamer1-plugins-good \
+	gstreamer1-plugins-bad-free \
+	gstreamer1-plugins-ugly-free \
 	gstreamer1-vaapi \
-        heif-pixbuf-loader \
+	heif-pixbuf-loader \
 	mpv \
 	showtime
 
