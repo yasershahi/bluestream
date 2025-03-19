@@ -114,14 +114,8 @@ RUN dnf install -y \
 	traceroute
 
 # H/W Video Acceleration
-RUN dnf remove -y libva-intel-media-driver
 RUN dnf install -y \
 	gstreamer1-plugin-openh264 \
-	libva \
-        libva-intel-driver \
-	libva-utils \
-	mesa-va-drivers-freeworld \
-	mesa-vdpau-drivers-freeworld \
 	mozilla-openh264 \
 	openh264
 
