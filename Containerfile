@@ -113,7 +113,7 @@ RUN dnf install -y --allowerasing \
 	ffmpeg \
 	ffmpeg-libs \
 	ffmpegthumbnailer \
-	gstreamer1-plugin-libva \
+	gstreamer1-plugin-libav \
 	gstreamer1-plugins-bad \
 	gstreamer1-plugins-ugly \
 	gstreamer1-plugind-vaapi \
