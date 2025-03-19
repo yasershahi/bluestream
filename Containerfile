@@ -94,8 +94,7 @@ RUN dnf install -y \
 
 # Web Browsers
 RUN dnf install -y \
-	ungoogled-chromium \
-	chromium-libs-media-freeworld
+	ungoogled-chromium
 
 # Networking Tools
 RUN dnf install -y \
