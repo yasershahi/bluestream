@@ -126,6 +126,8 @@ RUN dnf install -y --allowerasing \
 	ffmpeg \
 	ffmpeg-libs \
 	ffmpegthumbnailer \
+	libav \
+	libav-utils \
 	gstreamer1-libav \
         gstreamer1-plugins-bad-freeworld \
         gstreamer1-vaapi \
