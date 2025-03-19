@@ -100,7 +100,6 @@ RUN dnf install -y \
 # H/W Video Acceleration
 RUN dnf install -y --allowerasing \
 	intel-vaapi-driver \
-	libvacodec \
 	gstreamer1-plugin-openh264 \
 	mozilla-openh264 \
 	openh264
