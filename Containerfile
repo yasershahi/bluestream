@@ -118,7 +118,6 @@ RUN dnf install -y \
 	gstreamer1-plugin-openh264 \
 	libva \
         libva-intel-driver \
-        libva-intel-hybrid-driver \
 	libva-utils \
 	mesa-va-drivers-freeworld \
 	mesa-vdpau-drivers-freeworld \
