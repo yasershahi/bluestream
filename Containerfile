@@ -22,6 +22,19 @@ RUN set -euo pipefail && \
 RUN dnf install -y gcc make libxcrypt-compat
 RUN dnf install -y https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
 
+# Remove Packages
+RUN dnf remove -y \
+	gnome-shell-extension-common \
+	gnome-shell-extension-apps-menu \
+	gnome-shell-extension-launch-new-instance \
+	gnome-shell-extension-places-menu \
+	gnome-shell-extension-window-list \
+	gnome-shell-extension-background-logo \
+	gnome-tour \
+	gnome-software-rpm-ostree \
+	gnome-classic-session \
+	f41-backgrounds-gnome
+
 # Additional System Packages
 RUN dnf install -y \
 	aria2 \
@@ -69,21 +82,20 @@ RUN dnf install -y \
 	code \
 	devpod \
 	distrobox \
-	flatpak-builder \
 	gh \
 	git \
 	git-credential-oauth \
 	neovim \
 	pipx \
 	podman-compose \
-	podman-tui \
 	podmansh \
 	scrcpy \
 	subversion
 
 # Web Browsers
 RUN dnf install -y \
-	ungoogled-chromium
+	ungoogled-chromium \
+	chromium-libs-media-freeworld
 
 # Networking Tools
 RUN dnf install -y \
@@ -92,7 +104,6 @@ RUN dnf install -y \
 	httpie \
 	iftop \
 	iptables-libs \
-	libproxy-bin \
 	nmap \
 	net-tools \
 	nftables \
@@ -104,35 +115,32 @@ RUN dnf install -y \
 	traceroute
 
 # H/W Video Acceleration
-RUN dnf install -y --setopt=install_weak_deps=False \
+RUN dnf install -y \
 	gstreamer1-plugin-openh264 \
 	libva \
         libva-intel-driver \
+        libva-intel-hybrid-driver \
 	libva-utils \
 	mesa-va-drivers-freeworld \
+	mesa-vdpau-drivers-freeworld \
 	mozilla-openh264 \
 	openh264
 
 RUN dnf config-manager setopt fedora-cisco-openh264.enabled=1
 
 # Multimedia
-RUN dnf install -y --allowerasing --setopt=install_weak_deps=False \
+RUN dnf install -y --allowerasing \
 	ffmpeg \
 	ffmpeg-libs \
 	ffmpegthumbnailer \
-	gstreamer1-plugin-libav \
-        gstreamer1-plugins-bad-free-extras \
+	gstreamer1-libav \
         gstreamer1-plugins-bad-freeworld \
+        gstreamer1-plugins-bad-nonfree \
+        gstreamer1-plugins-ugly \
         gstreamer1-vaapi \
 	heif-pixbuf-loader \
 	mpv \
-	showtime \
-	vlc \
-	vlc-plugin-ffmpeg \
-	vlc-plugin-gnome \
-	vlc-plugin-gstreamer \
-	vlc-plugins-base \
-	vlc-plugins-extra
+	showtime
 
 # Patch Mutter
 RUN dnf reinstall -y mutter --repo copr:copr.fedorainfracloud.org:execat:mutter-performance
