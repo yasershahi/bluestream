@@ -114,6 +114,7 @@ RUN dnf install -y \
 	traceroute
 
 # H/W Video Acceleration
+RUN dnf remove -y libva-intel-media-driver
 RUN dnf install -y \
 	gstreamer1-plugin-openh264 \
 	libva \
