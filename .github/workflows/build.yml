@@ -74,8 +74,7 @@ jobs:
           platforms: linux/amd64
           provenance: false
           push: true
-          labels: ${{ steps.meta.outputs.labels }}
-          outputs: type=image,name=${{ env.REGISTRY_URL }}/${{ env.REGISTRY_USERNAME }}/${{ env.IMAGE_NAME }}:rawhide,push-by-digest=true,name-canonical=true
+          tags: ${{ env.REGISTRY_URL }}/${{ env.REGISTRY_USERNAME }}/${{ env.IMAGE_NAME }}:rawhide  # Use tags instead of outputs
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
