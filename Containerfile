@@ -126,9 +126,6 @@ RUN dnf reinstall -y --allowerasing \
 	mesa-libEGL \
 	mesa-libGL
 
-# Patch Mutter
-RUN dnf reinstall -y mutter --repo copr:copr.fedorainfracloud.org:execat:mutter-performance
-
 # Cleanup & Finalize
 RUN rm -rf /tmp/* /var/*
 RUN rm -f /etc/yum.repos.d/_copr:copr.fedorainfracloud.org:phracek:PyCharm.repo && \
