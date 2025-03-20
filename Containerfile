@@ -34,7 +34,6 @@ RUN dnf install -y \
 	bat \
 	dnf-utils \
 	duf \
-	eza \
 	fastfetch \
 	fish \
 	fzf \
