@@ -53,7 +53,7 @@ RUN set -euo pipefail && \
     curl -L -o /tmp/kernel/kernel-modules-extra-6.12.13-200.fc41.x86_64.rpm https://kojipkgs.fedoraproject.org/packages/kernel/6.12.13/200.fc41/x86_64/kernel-modules-extra-6.12.13-200.fc41.x86_64.rpm && \
     curl -L -o /tmp/kernel/kernel-tools-6.12.13-200.fc41.x86_64.rpm https://kojipkgs.fedoraproject.org/packages/kernel/6.12.13/200.fc41/x86_64/kernel-tools-6.12.13-200.fc41.x86_64.rpm && \
     curl -L -o /tmp/kernel/kernel-tools-libs-6.12.13-200.fc41.x86_64.rpm https://kojipkgs.fedoraproject.org/packages/kernel/6.12.13/200.fc41/x86_64/kernel-tools-libs-6.12.13-200.fc41.x86_64.rpm && \
-    curl -L -o /tmp/kernel/kernel-tools-libs-6.12.13-200.fc41.x86_64.rpm https://kojipkgs.fedoraproject.org//packages/kernel-headers/6.12.4/200.fc41/x86_64/kernel-headers-6.12.4-200.fc41.x86_64.rpm && \
+    curl -L -o /tmp/kernel/kernel-headers-6.12.4-200.fc41.x86_64.rpm https://kojipkgs.fedoraproject.org//packages/kernel-headers/6.12.4/200.fc41/x86_64/kernel-headers-6.12.4-200.fc41.x86_64.rpm && \
     # Install the downloaded RPMs
     dnf install -y /tmp/kernel/*.rpm && \
     # Clean up
@@ -132,11 +132,12 @@ RUN dnf install -y --allowerasing \
 	showtime
 
 # H/W Video Acceleration
-RUN dnf remove -y libva-intel-media-driver
 RUN dnf install -y \
 	gstreamer1-plugin-openh264 \
 	libva \
         libva-intel-driver \
+        libva-intel-hybrid-driver \
+        libva-intel-media-driver \
 	libva-utils \
 	mesa-va-drivers-freeworld \
 	mesa-vdpau-drivers-freeworld \
