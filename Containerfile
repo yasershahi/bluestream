@@ -42,15 +42,21 @@ RUN dnf remove -y \
     kernel-tools-libs* \
     kernel-headers*
 
-ENV KERNEL_VERSION=6.12.13
-ENV KERNEL_RELEASE=200.fc41
-
 RUN set -euo pipefail && \
+    # Create a directory for the kernel RPMs
     mkdir -p /tmp/kernel && \
-    for pkg in kernel kernel-core kernel-modules kernel-modules-core kernel-modules-extra kernel-tools kernel-tools-libs kernel-headers; do \
-        curl -L -o /tmp/kernel/${pkg}-${KERNEL_VERSION}-${KERNEL_RELEASE}.x86_64.rpm https://kojipkgs.fedoraproject.org/packages/${pkg}/${KERNEL_VERSION}/${KERNEL_RELEASE}/x86_64/${pkg}-${KERNEL_VERSION}-${KERNEL_RELEASE}.x86_64.rpm; \
-    done && \
+    # Download the kernel packages using the correct URLs
+    curl -L -o /tmp/kernel/kernel-6.12.13-200.fc41.x86_64.rpm https://kojipkgs.fedoraproject.org/packages/kernel/6.12.13/200.fc41/x86_64/kernel-6.12.13-200.fc41.x86_64.rpm && \
+    curl -L -o /tmp/kernel/kernel-core-6.12.13-200.fc41.x86_64.rpm https://kojipkgs.fedoraproject.org/packages/kernel/6.12.13/200.fc41/x86_64/kernel-core-6.12.13-200.fc41.x86_64.rpm && \
+    curl -L -o /tmp/kernel/kernel-modules-6.12.13-200.fc41.x86_64.rpm https://kojipkgs.fedoraproject.org/packages/kernel/6.12.13/200.fc41/x86_64/kernel-modules-6.12.13-200.fc41.x86_64.rpm && \
+    curl -L -o /tmp/kernel/kernel-modules-core-6.12.13-200.fc41.x86_64.rpm https://kojipkgs.fedoraproject.org/packages/kernel/6.12.13/200.fc41/x86_64/kernel-modules-core-6.12.13-200.fc41.x86_64.rpm && \
+    curl -L -o /tmp/kernel/kernel-modules-extra-6.12.13-200.fc41.x86_64.rpm https://kojipkgs.fedoraproject.org/packages/kernel/6.12.13/200.fc41/x86_64/kernel-modules-extra-6.12.13-200.fc41.x86_64.rpm && \
+    curl -L -o /tmp/kernel/kernel-tools-6.12.13-200.fc41.x86_64.rpm https://kojipkgs.fedoraproject.org/packages/kernel/6.12.13/200.fc41/x86_64/kernel-tools-6.12.13-200.fc41.x86_64.rpm && \
+    curl -L -o /tmp/kernel/kernel-tools-libs-6.12.13-200.fc41.x86_64.rpm https://kojipkgs.fedoraproject.org/packages/kernel/6.12.13/200.fc41/x86_64/kernel-tools-libs-6.12.13-200.fc41.x86_64.rpm && \
+    curl -L -o /tmp/kernel/kernel-tools-libs-6.12.13-200.fc41.x86_64.rpm https://kojipkgs.fedoraproject.org//packages/kernel-headers/6.12.4/200.fc41/x86_64/kernel-headers-6.12.4-200.fc41.x86_64.rpm && \
+    # Install the downloaded RPMs
     dnf install -y /tmp/kernel/*.rpm && \
+    # Clean up
     rm -rf /tmp/kernel
 
 
