@@ -14,6 +14,10 @@ RUN set -euo pipefail && \
         echo "L+ /var/opt/$dirname - - - - /usr/lib/opt/$dirname" >> /usr/lib/tmpfiles.d/opt-fix.conf; \
     done
 
+# Add RPM Fusion
+RUN dnf install -y gcc make libxcrypt-compat
+RUN dnf install -y https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
+
 # Remove Packages
 RUN dnf remove -y \
 	gnome-shell-extension-common \
@@ -42,7 +46,6 @@ RUN dnf install -y \
 	htop \
 	ifuse \
 	iotop \
-	libxcrypt-compat \
 	libsss_autofs \
 	lm_sensors \
 	p7zip \
@@ -60,15 +63,12 @@ RUN dnf install -y \
 
 # Developer Tools
 RUN dnf install -y \
-	bcc \
 	code \
 	devpod \
 	distrobox \
-	gcc \
 	gh \
 	git \
 	git-credential-oauth \
-	make \
 	neovim \
 	pipx \
 	scrcpy \
@@ -98,32 +98,27 @@ RUN dnf install -y --allowerasing \
 	ffmpeg \
 	ffmpeg-libs \
 	ffmpegthumbnailer \
-	gstreamer1-plugins-ugly \
-	gstreamer1-plugin-vaapi \
+	gstreamer1-libav \
+        gstreamer1-plugins-bad-freeworld \
+        gstreamer1-plugins-ugly \
+        gstreamer1-vaapi \
 	heif-pixbuf-loader \
 	mpv \
-	pipewire-libs-extra \
-	showtime \
-	x264 \
-	x265
+	showtime
 
 # H/W Video Acceleration
-RUN dnf install -y --allowerasing  --setopt=install_weak_deps=False \
-	intel-vaapi-driver \
+RUN dnf remove -y libva-intel-media-driver
+RUN dnf install -y \
 	gstreamer1-plugin-openh264 \
+	libva \
+        libva-intel-driver \
+	libva-utils \
+	mesa-va-drivers-freeworld \
+	mesa-vdpau-drivers-freeworld \
 	mozilla-openh264 \
 	openh264
 
-RUN dnf reinstall -y --allowerasing \
-	libva \
-	libvs-utils \
-	libva-intel-media-driver \
-	gstreamer1-plugin-libav \
-	gstreamer1-plugins-bad \
-	mesa-va-drivers \
-	mesa-dri-drivers \
-	mesa-libEGL \
-	mesa-libGL
+RUN dnf config-manager setopt fedora-cisco-openh264.enabled=1
 
 # Cleanup & Finalize
 RUN rm -rf /tmp/* /var/*
