@@ -39,7 +39,6 @@ RUN dnf install -y \
 	fzf \
 	gnome-themes-extra \
 	gnome-tweaks \
-	gvfs-nfs \
 	htop \
 	ifuse \
 	iotop \
