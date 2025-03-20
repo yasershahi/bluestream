@@ -1,5 +1,4 @@
-ARG FEDORA_MAJOR_VERSION=41
-FROM quay.io/fedora/fedora-silverblue:${FEDORA_MAJOR_VERSION}
+FROM quay.io/fedora/fedora-silverblue:rawhide
 
 # Copy Files
 COPY rootfs/ /
@@ -26,7 +25,6 @@ RUN dnf remove -y \
 	gnome-tour \
 	gnome-software-rpm-ostree \
 	gnome-classic-session \
-	f41-backgrounds-base \
 	fedora-workstation-backgrounds
 
 # Additional System Packages
@@ -120,6 +118,7 @@ RUN dnf install -y --allowerasing  --setopt=install_weak_deps=False \
 
 RUN dnf reinstall -y --allowerasing \
 	libva \
+	libvs-utils \
 	libva-intel-media-driver \
 	gstreamer1-plugin-libav \
 	gstreamer1-plugins-bad \
