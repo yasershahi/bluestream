@@ -31,6 +31,28 @@ RUN dnf remove -y \
 	gnome-classic-session \
 	fedora-workstation-backgrounds
 
+# Stable Kernel
+RUN dnf remove -y \
+    kernel* \
+    kernel-core* \
+    kernel-modules* \
+    kernel-modules-core* \
+    kernel-modules-extra* \
+    kernel-tools* \
+    kernel-tools-libs* \
+    kernel-headers*
+
+ENV KERNEL_VERSION=6.12.13-200.fc41
+
+RUN set -euo pipefail && \
+    mkdir -p /tmp/kernel && \
+    for pkg in kernel kernel-core kernel-modules kernel-modules-core kernel-modules-extra kernel-tools kernel-tools-libs kernel-headers; do \
+        curl -L -o /tmp/kernel/${pkg}-${KERNEL_VERSION}.x86_64.rpm https://kojipkgs.fedoraproject.org//packages/${pkg}/${KERNEL_VERSION}/x86_64/${pkg}-${KERNEL_VERSION}.x86_64.rpm; \
+    done && \
+    dnf install -y /tmp/kernel/*.rpm && \
+    rm -rf /tmp/kernel
+
+
 # Additional System Packages
 RUN dnf install -y \
 	aria2 \
