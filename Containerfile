@@ -63,10 +63,7 @@ RUN set -euo pipefail && \
 # Additional System Packages
 RUN dnf install -y \
 	aria2 \
-	adcli \
 	bat \
-	dnf-utils \
-	duf \
 	fastfetch \
 	fish \
 	fzf \
@@ -74,17 +71,10 @@ RUN dnf install -y \
 	gnome-tweaks \
 	htop \
 	ifuse \
-	iotop \
-	libsss_autofs \
 	lm_sensors \
 	p7zip \
 	p7zip-plugins \
-	procs \
-	screen \
-	strace \
 	tldr \
-	tmux \
-	tokei \
 	unrar \
 	wl-clipboard \
 	yt-dlp \
@@ -106,17 +96,10 @@ RUN dnf install -y \
 # Networking Tools
 RUN dnf install -y \
 	cloudflare-warp \
-	firewall-config \
-	httpie \
 	iftop \
-	nmap \
 	net-tools \
 	nss-tools \
-	NetworkManager-sstp \
-	NetworkManager-sstp-gnome \
-	sstp-client \
-	tailscale \
-	traceroute
+	tailscale
 
 # Multimedia
 RUN dnf install -y --allowerasing \
