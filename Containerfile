@@ -1,4 +1,4 @@
-FROM quay.io/fedora/fedora-silverblue:rawhide
+FROM quay.io/fedora/fedora-silverblue:42
 
 # Copy Files
 COPY rootfs/ /
@@ -30,35 +30,6 @@ RUN dnf remove -y \
 	gnome-software-rpm-ostree \
 	gnome-classic-session \
 	fedora-workstation-backgrounds
-
-# Stable Kernel
-RUN dnf remove -y \
-    kernel* \
-    kernel-core* \
-    kernel-modules* \
-    kernel-modules-core* \
-    kernel-modules-extra* \
-    kernel-tools* \
-    kernel-tools-libs* \
-    kernel-headers*
-
-RUN set -euo pipefail && \
-    # Create a directory for the kernel RPMs
-    mkdir -p /tmp/kernel && \
-    # Download the kernel packages using the correct URLs
-    curl -L -o /tmp/kernel/kernel-6.12.13-200.fc41.x86_64.rpm https://kojipkgs.fedoraproject.org/packages/kernel/6.12.13/200.fc41/x86_64/kernel-6.12.13-200.fc41.x86_64.rpm && \
-    curl -L -o /tmp/kernel/kernel-core-6.12.13-200.fc41.x86_64.rpm https://kojipkgs.fedoraproject.org/packages/kernel/6.12.13/200.fc41/x86_64/kernel-core-6.12.13-200.fc41.x86_64.rpm && \
-    curl -L -o /tmp/kernel/kernel-modules-6.12.13-200.fc41.x86_64.rpm https://kojipkgs.fedoraproject.org/packages/kernel/6.12.13/200.fc41/x86_64/kernel-modules-6.12.13-200.fc41.x86_64.rpm && \
-    curl -L -o /tmp/kernel/kernel-modules-core-6.12.13-200.fc41.x86_64.rpm https://kojipkgs.fedoraproject.org/packages/kernel/6.12.13/200.fc41/x86_64/kernel-modules-core-6.12.13-200.fc41.x86_64.rpm && \
-    curl -L -o /tmp/kernel/kernel-modules-extra-6.12.13-200.fc41.x86_64.rpm https://kojipkgs.fedoraproject.org/packages/kernel/6.12.13/200.fc41/x86_64/kernel-modules-extra-6.12.13-200.fc41.x86_64.rpm && \
-    curl -L -o /tmp/kernel/kernel-tools-6.12.13-200.fc41.x86_64.rpm https://kojipkgs.fedoraproject.org/packages/kernel/6.12.13/200.fc41/x86_64/kernel-tools-6.12.13-200.fc41.x86_64.rpm && \
-    curl -L -o /tmp/kernel/kernel-tools-libs-6.12.13-200.fc41.x86_64.rpm https://kojipkgs.fedoraproject.org/packages/kernel/6.12.13/200.fc41/x86_64/kernel-tools-libs-6.12.13-200.fc41.x86_64.rpm && \
-    curl -L -o /tmp/kernel/kernel-headers-6.12.4-200.fc41.x86_64.rpm https://kojipkgs.fedoraproject.org//packages/kernel-headers/6.12.4/200.fc41/x86_64/kernel-headers-6.12.4-200.fc41.x86_64.rpm && \
-    # Install the downloaded RPMs
-    dnf install -y /tmp/kernel/*.rpm && \
-    # Clean up
-    rm -rf /tmp/kernel
-
 
 # Additional System Packages
 RUN dnf install -y \
@@ -119,11 +90,8 @@ RUN dnf install -y \
 	gstreamer1-plugin-openh264 \
 	libva \
         libva-intel-driver \
-        libva-intel-hybrid-driver \
-        libva-intel-media-driver \
 	libva-utils \
 	mesa-va-drivers-freeworld \
-	mesa-vdpau-drivers-freeworld \
 	mozilla-openh264 \
 	openh264
 

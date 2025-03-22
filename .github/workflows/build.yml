@@ -70,11 +70,11 @@ jobs:
           file: |
             ./Containerfile
           build-args: |
-            FEDORA_MAJOR_VERSION=rawhide
+            FEDORA_MAJOR_VERSION=41
           platforms: linux/amd64
           provenance: false
           push: true
-          tags: ${{ env.REGISTRY_URL }}/${{ env.REGISTRY_USERNAME }}/${{ env.IMAGE_NAME }}:rawhide  # Use tags instead of outputs
+          tags: ${{ env.REGISTRY_URL }}/${{ env.REGISTRY_USERNAME }}/${{ env.IMAGE_NAME }}:41  # Use tags instead of outputs
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
@@ -87,7 +87,7 @@ jobs:
       - name: Upload digest
         uses: actions/upload-artifact@v4
         with:
-          name: digests-rawhide
+          name: digests-41
           path: /tmp/digests/*
           if-no-files-found: error
           retention-days: 1
@@ -97,7 +97,7 @@ jobs:
 
       - name: Sign container image
         run: |
-          cosign sign -y --key env://COSIGN_PRIVATE_KEY ${{ env.REGISTRY_URL }}/${{ env.REGISTRY_USERNAME }}/${{ env.IMAGE_NAME }}:rawhide
+          cosign sign -y --key env://COSIGN_PRIVATE_KEY ${{ env.REGISTRY_URL }}/${{ env.REGISTRY_USERNAME }}/${{ env.IMAGE_NAME }}:41
         env:
           COSIGN_PRIVATE_KEY: ${{ secrets.COSIGN_KEY }}
 
