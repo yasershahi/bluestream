@@ -14,7 +14,7 @@ RUN set -euo pipefail && \
         echo "L+ /var/opt/$dirname - - - - /usr/lib/opt/$dirname" >> /usr/lib/tmpfiles.d/opt-fix.conf; \
     done
 
-# Add RPM Fusion
+# Add RPM Fusionss
 RUN dnf install -y gcc make libxcrypt-compat
 RUN dnf install -y https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
 
@@ -102,17 +102,13 @@ RUN dnf install -y \
 	ungoogled-chromium
 
 # Patch Mutter
-RUN dnf reinstall -y --repo copr:copr.fedorainfracloud.org:trixieua:mutter-patched \
-	gnome-shell \
-	mutter \
-	mutter-common \
-	gdm
+RUN dnf reinstall -y mutter --repo copr:copr.fedorainfracloud.org:execat:mutter-performance
 
 # Cleanup & Finalize
 RUN rm -rf /tmp/* /var/*
 RUN rm -f /etc/yum.repos.d/_copr:copr.fedorainfracloud.org:phracek:PyCharm.repo && \
     rm -f /etc/yum.repos.d/fedora-cisco-openh264.repo && \
-    rm -f /etc/yum.repos.d/trixieua-mutter-patched.repo && \
+    rm -f /etc/yum.repos.d/execat-mutter-performance.repo && \
     rm -f /etc/yum.repos.d/github.repo && \
     rm -f /etc/yum.repos.d/vscode.repo && \
     rm -f /etc/yum.repos.d/chronoscrat-devpod.repo && \

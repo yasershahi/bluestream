@@ -1,0 +1,10 @@
+[copr:copr.fedorainfracloud.org:execat:mutter-performance]
+name=Copr repo for mutter-performance owned by execat
+baseurl=https://download.copr.fedorainfracloud.org/results/execat/mutter-performance/fedora-$releasever-$basearch/
+type=rpm-md
+skip_if_unavailable=True
+gpgcheck=1
+gpgkey=https://download.copr.fedorainfracloud.org/results/execat/mutter-performance/pubkey.gpg
+repo_gpgcheck=0
+enabled=1
+enabled_metadata=1
