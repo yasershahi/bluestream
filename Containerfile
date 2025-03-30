@@ -1,4 +1,4 @@
-FROM quay.io/fedora/fedora-silverblue:41
+FROM quay.io/fedora/fedora-silverblue:42
 
 # Copy Files
 COPY rootfs/ /
@@ -33,22 +33,15 @@ RUN dnf remove -y \
 
 # Additional System Packages
 RUN dnf install -y \
-	aria2 \
-	bat \
 	fastfetch \
 	fish \
-	fzf \
 	gnome-themes-extra \
-	gnome-tweaks \
-	htop \
 	ifuse \
 	lm_sensors \
 	p7zip \
 	p7zip-plugins \
-	tldr \
 	unrar \
 	wl-clipboard \
-	yt-dlp \
 	zstd
 
 # Developer Tools
@@ -56,18 +49,11 @@ RUN dnf install -y \
 	code \
 	devpod \
 	distrobox \
-	gh \
-	git \
-	git-credential-oauth \
-	neovim \
-	pipx \
-	scrcpy \
-	subversion
+	neovim
 
 # Networking Tools
 RUN dnf install -y \
 	cloudflare-warp \
-	iftop \
 	net-tools \
 	nss-tools \
 	tailscale
@@ -81,9 +67,7 @@ RUN dnf install -y --allowerasing \
         gstreamer1-plugins-bad-freeworld \
         gstreamer1-plugins-ugly \
         gstreamer1-vaapi \
-	heif-pixbuf-loader \
-	mpv \
-	showtime
+	heif-pixbuf-loader
 
 # H/W Video Acceleration
 RUN dnf install -y \
@@ -102,7 +86,7 @@ RUN dnf install -y \
 	ungoogled-chromium
 
 # Patch Mutter
-RUN dnf reinstall -y mutter --repo copr:copr.fedorainfracloud.org:execat:mutter-performance
+#RUN dnf reinstall -y mutter --repo copr:copr.fedorainfracloud.org:execat:mutter-performance
 
 # Cleanup & Finalize
 RUN rm -rf /tmp/* /var/*
