@@ -39,7 +39,6 @@ RUN dnf install -y \
 	fish \
 	gnome-themes-extra \
 	ifuse \
-	lm_sensors \
 	p7zip \
 	p7zip-plugins \
 	unrar \
@@ -56,7 +55,6 @@ RUN dnf install -y \
 # Networking Tools
 RUN dnf install -y \
 	cloudflare-warp \
-	net-tools \
 	nss-tools \
 	tailscale
 
