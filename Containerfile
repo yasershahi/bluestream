@@ -85,14 +85,10 @@ RUN dnf config-manager setopt fedora-cisco-openh264.enabled=1
 RUN dnf install -y \
 	ungoogled-chromium
 
-# Patch Mutter
-#RUN dnf reinstall -y mutter --repo copr:copr.fedorainfracloud.org:execat:mutter-performance
-
 # Cleanup & Finalize
 RUN rm -rf /tmp/* /var/*
 RUN rm -f /etc/yum.repos.d/_copr:copr.fedorainfracloud.org:phracek:PyCharm.repo && \
     rm -f /etc/yum.repos.d/fedora-cisco-openh264.repo && \
-    rm -f /etc/yum.repos.d/execat-mutter-performance.repo && \
     rm -f /etc/yum.repos.d/github.repo && \
     rm -f /etc/yum.repos.d/vscode.repo && \
     rm -f /etc/yum.repos.d/chronoscrat-devpod.repo && \
