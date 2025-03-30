@@ -29,7 +29,9 @@ RUN dnf remove -y \
 	gnome-tour \
 	gnome-software-rpm-ostree \
 	gnome-classic-session \
-	fedora-workstation-backgrounds
+	fedora-workstation-backgrounds \
+	firefox-langpacks \
+	firefox
 
 # Additional System Packages
 RUN dnf install -y \
@@ -83,7 +85,8 @@ RUN dnf config-manager setopt fedora-cisco-openh264.enabled=1
 
 # Web Browsers
 RUN dnf install -y \
-	ungoogled-chromium
+	ungoogled-chromium \
+	librewolf
 
 # Cleanup & Finalize
 RUN rm -rf /tmp/* /var/*
@@ -91,6 +94,7 @@ RUN rm -f /etc/yum.repos.d/_copr:copr.fedorainfracloud.org:phracek:PyCharm.repo 
     rm -f /etc/yum.repos.d/fedora-cisco-openh264.repo && \
     rm -f /etc/yum.repos.d/github.repo && \
     rm -f /etc/yum.repos.d/vscode.repo && \
+    rm -f /etc/yum/repos.d/librewolf.repo && \
     rm -f /etc/yum.repos.d/chronoscrat-devpod.repo && \
     rm -f /etc/yum.repos.d/cloudflare-warp.repo && \
     rm -f /etc/yum.repos.d/wojnilowicz-ungoogled-chromium.repo && \
