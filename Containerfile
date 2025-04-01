@@ -18,21 +18,6 @@ RUN set -euo pipefail && \
 RUN dnf install -y gcc make libxcrypt-compat
 RUN dnf install -y https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
 
-# Remove Packages
-RUN dnf remove -y \
-	gnome-shell-extension-common \
-	gnome-shell-extension-apps-menu \
-	gnome-shell-extension-launch-new-instance \
-	gnome-shell-extension-places-menu \
-	gnome-shell-extension-window-list \
-	gnome-shell-extension-background-logo \
-	gnome-tour \
-	gnome-software-rpm-ostree \
-	gnome-classic-session \
-	fedora-workstation-backgrounds \
-	firefox-langpacks \
-	firefox
-
 # Additional System Packages
 RUN dnf install -y \
 	fastfetch \
@@ -83,6 +68,23 @@ RUN dnf config-manager setopt fedora-cisco-openh264.enabled=1
 RUN dnf install -y \
 	ungoogled-chromium \
 	librewolf
+
+# Remove Packages
+RUN dnf remove -y \
+	gnome-shell-extension-common \
+	gnome-shell-extension-apps-menu \
+	gnome-shell-extension-launch-new-instance \
+	gnome-shell-extension-places-menu \
+	gnome-shell-extension-window-list \
+	gnome-shell-extension-background-logo \
+	gnome-tour \
+	gnome-software-rpm-ostree \
+	gnome-classic-session \
+	fedora-workstation-backgrounds \
+	firefox-langpacks \
+	firefox \
+	gcc \
+	make
 
 # Cleanup & Finalize
 RUN rm -rf /tmp/* /var/*
