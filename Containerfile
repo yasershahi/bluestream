@@ -38,6 +38,7 @@ RUN dnf install -y \
 	fastfetch \
 	fish \
 	gnome-themes-extra \
+	gnome-tweaks \
 	ifuse \
 	p7zip \
 	p7zip-plugins \
@@ -48,7 +49,6 @@ RUN dnf install -y \
 # Developer Tools
 RUN dnf install -y \
 	code \
-	devpod \
 	distrobox \
 	neovim
 
@@ -65,7 +65,6 @@ RUN dnf install -y --allowerasing \
 	ffmpegthumbnailer \
 	gstreamer1-libav \
         gstreamer1-plugins-bad-freeworld \
-        gstreamer1-plugins-ugly \
         gstreamer1-vaapi \
 	heif-pixbuf-loader
 
@@ -75,7 +74,6 @@ RUN dnf install -y \
 	libva \
         libva-intel-driver \
 	libva-utils \
-	mesa-va-drivers-freeworld \
 	mozilla-openh264 \
 	openh264
 
