@@ -84,12 +84,7 @@ RUN dnf install -y \
     openh264
 
 # Web Browsers
-RUN dnf install -y \
-    liberation-fonts-all \
-    brave-keyring \
-    brave-browser && \
-    update-alternatives --install /usr/bin/brave-browser brave-browser /opt/brave.com/brave/brave-browser 100 && \
-    update-alternatives --set brave-browser /opt/brave.com/brave/brave-browser
+RUN dnf install -y ungoogled-chromium
 
 # Remove Packages
 RUN dnf remove -y \
