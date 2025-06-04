@@ -132,6 +132,34 @@ Fish shell is included in this image. If you wish to use it as your default shel
    ```
 You may need to log out and log back in for the shell change to take effect.
 
+### (Optional) Enhance Your Fish Shell with Starship Prompt
+
+1. **Install a Nerd Font** (required for best Starship experience):
+   - Download and install a font like JetBrainsMono from [Nerd Fonts](https://www.nerdfonts.com/).
+
+2. **Install Starship prompt:**
+   ```sh
+   curl -sS https://starship.rs/install.sh | sh
+   ```
+
+3. **Configure Fish shell to initialize Starship:**
+   ```sh
+   nano ~/.config/fish/config.fish
+   ```
+   Add this line to the end of the file:
+   ```sh
+   starship init fish | source
+   ```
+
+4. **(Optional) Use a Starship preset:**
+   - See available [Starship presets](https://starship.rs/presets/)
+   - Example (Pure preset):
+     ```sh
+     starship preset pure-preset -o ~/.config/starship.toml
+     ```
+
+After these steps, your Fish shell will have a beautiful, fast, and informative prompt!
+
 ## Disclaimer
 
 Fedora® is a registered trademark of Red Hat, Inc. This project is not affiliated with, endorsed by, or sponsored by the Fedora Project or Red Hat, Inc.
