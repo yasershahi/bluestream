@@ -76,6 +76,62 @@ Note: While bootc doesn't handle signature verification automatically, you can m
 - Common GNOME extensions removed for a cleaner experience
 - Optimized systemd timeout settings
 
+## Post-install Steps (Optional)
+
+After installing BlueStream, you may want to perform some additional setup for a better experience:
+
+### Docker Setup
+Docker is provided in this image, but you need to perform a few steps to enable it for your user:
+
+1. **Create the docker group (if it doesn't exist):**
+   ```sh
+   sudo groupadd docker
+   ```
+2. **Add your user to the docker group:**
+   ```sh
+   sudo usermod -aG docker $USER
+   ```
+3. **Enable Docker and containerd services:**
+   ```sh
+   sudo systemctl enable docker.service
+   sudo systemctl enable containerd.service
+   ```
+4. **Apply group changes without rebooting:**
+   ```sh
+   newgrp docker
+   ```
+After these steps, you should be able to use Docker as your regular user without sudo.
+
+### Change Default Shell to Fish
+Fish shell is included in this image. If you wish to use it as your default shell, follow these steps:
+
+1. **Run fish for the first time:**
+   ```sh
+   fish
+   ```
+2. **Locate the installed path:**
+   ```sh
+   which fish
+   # Should output: /usr/sbin/fish
+   ```
+3. **Add fish to /etc/shells (if not already present):**
+   ```sh
+   echo /usr/sbin/fish | sudo tee -a /etc/shells
+   ```
+4. **Change your default shell to fish:**
+   ```sh
+   chsh -s /usr/sbin/fish
+   ```
+5. **Reopen your terminal. To disable the Fish welcome message:**
+   ```sh
+   nano ~/.config/fish/config.fish
+   ```
+   Add this line to the file:
+   ```sh
+   set -g fish_greeting ""
+   ```
+You may need to log out and log back in for the shell change to take effect.
+
 ## Disclaimer
 
 Fedora® is a registered trademark of Red Hat, Inc. This project is not affiliated with, endorsed by, or sponsored by the Fedora Project or Red Hat, Inc.
