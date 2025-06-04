@@ -1,6 +1,6 @@
 # BlueStream
 
-A custom Fedora Silverblue image built on top of bootc-based Fedora Silverblue with RPM Fusion (free & nonfree) and Terra repositories enabled. Optimized for developers and power users with additional tools and multimedia support.
+A custom Fedora Silverblue 42 image built on top of bootc-based Fedora Silverblue with RPM Fusion (free & nonfree) and Terra repositories enabled. Optimized for developers and power users with additional tools and multimedia support.
 
 [![Build](https://github.com/yasershahi/bluestream/actions/workflows/build.yml/badge.svg)](https://github.com/yasershahi/bluestream/actions/workflows/build.yml)
 
@@ -33,7 +33,7 @@ A custom Fedora Silverblue image built on top of bootc-based Fedora Silverblue w
 
 ## Before Rebasing
 
-It's recommended to pin your current deployment before rebasing. This ensures you can return to your current state if needed:
+It's recommended to reset rpm-ostree and pin your current deployment before rebasing. This ensures you can return to your current state if needed:
 
 ```bash
 # View available deployments
@@ -41,36 +41,26 @@ rpm-ostree status
 
 # Pin your current deployment (0 is usually the active deployment)
 sudo ostree admin pin 0
+
+# Switch to bootc
+sudo bootc switch quay.io/fedora/fedora-silverblue:42
+
+# After switch, reboot the system
+systemctl reboot
 ```
 
 ## Rebase to BlueStream
 
-### Quick Start (Unsigned)
+### Rebase Command
 
 ```bash
-sudo rpm-ostree rebase ostree-unverified-registry:ghcr.io/yasershahi/bluestream:latest
+sudo bootc switch ghcr.io/yasershahi/bluestream:latest
 
 # After the rebase, reboot the system
 systemctl reboot
 ```
 
-### Verified Rebase (Recommended)
-
-```bash
-# Rebase to signed image
-sudo rpm-ostree rebase ostree-image-signed:docker://ghcr.io/yasershahi/bluestream:latest
-
-# After the rebase, reboot the system
-systemctl reboot
-```
-
-## Verification
-
-The image is signed with Cosign. You can verify the signature using:
-
-```bash
-cosign verify --key cosign.pub ghcr.io/yasershahi/bluestream:latest
-```
+Note: The image is signed with Cosign for security, and bootc handles the verification automatically.
 
 ## Pre-configured Features
 
