@@ -99,7 +99,9 @@ RUN dnf remove -y \
     make
 
 # Cleanup & Finalize
-RUN rm -rf /tmp/* /var/* && \
+RUN rm -rf /tmp/* && \
+    rm -rf /var/cache/* /var/log/* /var/tmp/* && \
+    mkdir -p /var/cache /var/log /var/tmp && \
     rm -f /etc/yum.repos.d/{_copr:copr.fedorainfracloud.org:phracek:PyCharm,fedora-cisco-openh264,gh-cli,vscode,chronoscrat-devpod,cloudflare-warp,wojnilowicz-ungoogled-chromium,brave-browser,zeno-scrcpy,docker-ce,terra}.repo && \
     rm -f /etc/yum.repos.d/librewolf.repo && \
     rm -f /etc/xdg/autostart/org.gnome.Software.desktop && \
