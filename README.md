@@ -54,13 +54,17 @@ systemctl reboot
 ### Rebase Command
 
 ```bash
-sudo bootc switch ghcr.io/yasershahi/bluestream:latest
+# Optional: Verify image signature before switching (recommended)
+cosign verify --key cosign.pub ghcr.io/yasershahi/bluestream:42
+
+# Switch to BlueStream
+sudo bootc switch ghcr.io/yasershahi/bluestream:42
 
 # After the rebase, reboot the system
 systemctl reboot
 ```
 
-Note: The image is signed with Cosign for security, and bootc handles the verification automatically.
+Note: While bootc doesn't handle signature verification automatically, you can manually verify the image's signature using Cosign before switching. The public key (cosign.pub) is provided in this repository.
 
 ## Pre-configured Features
 
