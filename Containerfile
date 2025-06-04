@@ -23,40 +23,54 @@ RUN dnf install -y gcc make libxcrypt-compat && \
 
 # System and Developer Tools
 RUN dnf install -y \
+    android-tools \
+    bootc \
+    code \
+    containerd.io \
+    devpod \
+    distrobox \
+    docker-buildx-plugin \
+    docker-ce \
+    docker-ce-cli \
+    docker-compose-plugin \
     fastfetch \
     fish \
     gnome-themes-extra \
     gnome-tweaks \
     ifuse \
-    p7zip \
-    p7zip-plugins \
-    unrar \
-    wl-clipboard \
-    zstd \
-    code \
-    distrobox \
+    lm_sensors \
     neovim \
     nss-tools \
-    tailscale
+    p7zip \
+    p7zip-plugins \
+    podman-bootc \
+    podman-compose \
+    scrcpy \
+    tailscale \
+    tmux \
+    unrar \
+    wl-clipboard \
+    zstd
 
 # Multimedia
 RUN dnf install -y --allowerasing \
-	ffmpeg \
-	ffmpeg-libs \
-	ffmpegthumbnailer \
-	gstreamer1-libav \
+    ffmpeg \
+    ffmpeg-libs \
+    ffmpegthumbnailer \
+    gstreamer1-libav \
     gstreamer1-plugins-bad-freeworld \
     gstreamer1-vaapi \
-	heif-pixbuf-loader
+    heif-pixbuf-loader
 
 # H/W Video Acceleration
 RUN dnf install -y \
     gstreamer1-plugin-openh264 \
+    intel-gpu-tools \
+    intel-media-driver \
     libva \
     libva-intel-driver \
     libva-utils \
-    openh264 && \
-    dnf config-manager --setopt=fedora-cisco-openh264.enabled=1
+    openh264
 
 # Web Browsers
 RUN dnf install -y \
@@ -64,24 +78,24 @@ RUN dnf install -y \
 
 # Remove Packages
 RUN dnf remove -y \
-	gnome-shell-extension-common \
-	gnome-shell-extension-apps-menu \
-	gnome-shell-extension-launch-new-instance \
-	gnome-shell-extension-places-menu \
-	gnome-shell-extension-window-list \
-	gnome-shell-extension-background-logo \
-	gnome-tour \
-	gnome-software-rpm-ostree \
-	gnome-classic-session \
-	fedora-workstation-backgrounds \
-	firefox-langpacks \
-	firefox \
-	gcc \
-	make
+    fedora-workstation-backgrounds \
+    firefox \
+    firefox-langpacks \
+    gcc \
+    gnome-classic-session \
+    gnome-shell-extension-apps-menu \
+    gnome-shell-extension-background-logo \
+    gnome-shell-extension-common \
+    gnome-shell-extension-launch-new-instance \
+    gnome-shell-extension-places-menu \
+    gnome-shell-extension-window-list \
+    gnome-software-rpm-ostree \
+    gnome-tour \
+    make
 
 # Cleanup & Finalize
 RUN rm -rf /tmp/* /var/* && \
-    rm -f /etc/yum.repos.d/{_copr:copr.fedorainfracloud.org:phracek:PyCharm,fedora-cisco-openh264,github,vscode,chronoscrat-devpod,cloudflare-warp,wojnilowicz-ungoogled-chromium,brave-browser}.repo && \
+    rm -f /etc/yum.repos.d/{_copr:copr.fedorainfracloud.org:phracek:PyCharm,fedora-cisco-openh264,github,vscode,chronoscrat-devpod,cloudflare-warp,wojnilowicz-ungoogled-chromium,brave-browser,zeno-scrcpy,docker-ce}.repo && \
     rm -f /etc/yum.repos.d/librewolf.repo && \
     rm -f /etc/xdg/autostart/org.gnome.Software.desktop && \
     systemctl enable flatpak-add-flathub-repo.service && \
