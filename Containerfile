@@ -26,7 +26,11 @@ RUN dnf install -y gcc make libxcrypt-compat && \
         selinux-policy \
         selinux-policy-targeted \
         container-selinux && \
-    command -v semodule || ln -sf /usr/sbin/semodule /usr/bin/semodule
+    command -v semodule || ln -sf /usr/sbin/semodule /usr/bin/semodule && \
+    mkdir -p /etc/selinux && \
+    mkdir -p /var/lib/selinux && \
+    chmod 755 /etc/selinux && \
+    chmod 755 /var/lib/selinux
 
 # System and Developer Tools
 RUN dnf install -y \
