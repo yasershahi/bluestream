@@ -25,7 +25,8 @@ RUN dnf install -y gcc make libxcrypt-compat && \
         policycoreutils-python-utils \
         selinux-policy \
         selinux-policy-targeted \
-        container-selinux
+        container-selinux && \
+    command -v semodule || ln -sf /usr/sbin/semodule /usr/bin/semodule
 
 # System and Developer Tools
 RUN dnf install -y \
@@ -100,8 +101,9 @@ RUN dnf remove -y \
 
 # Cleanup & Finalize
 RUN rm -rf /tmp/* && \
-    rm -rf /var/cache/* /var/log/* /var/tmp/* && \
+    rm -rf /var/cache/dnf/* /var/log/* /var/tmp/* && \
     mkdir -p /var/cache /var/log /var/tmp && \
+    chmod 1777 /var/tmp && \
     rm -f /etc/yum.repos.d/{_copr:copr.fedorainfracloud.org:phracek:PyCharm,fedora-cisco-openh264,gh-cli,vscode,chronoscrat-devpod,cloudflare-warp,wojnilowicz-ungoogled-chromium,brave-browser,zeno-scrcpy,docker-ce,terra}.repo && \
     rm -f /etc/yum.repos.d/librewolf.repo && \
     rm -f /etc/xdg/autostart/org.gnome.Software.desktop && \
@@ -112,5 +114,4 @@ RUN rm -rf /tmp/* && \
     sed -i 's/#DefaultTimeoutStopSec.*/DefaultTimeoutStopSec=15s/' /etc/systemd/user.conf && \
     sed -i 's/#DefaultTimeoutStopSec.*/DefaultTimeoutStopSec=15s/' /etc/systemd/system.conf && \
     dnf clean all
-
-
+   
