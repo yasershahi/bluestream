@@ -67,12 +67,13 @@ RUN dnf install -y \
     zstd
 
 # Multimedia
-RUN dnf install -y --allowerasing \
+RUN export GNUPGHOME=/var/tmp/gnupg && \
+    mkdir -p $GNUPGHOME && \
+    dnf install -y --allowerasing \
     ffmpeg \
     ffmpeg-libs \
     ffmpegthumbnailer \
     gstreamer1-libav \
-    gstreamer1-plugins-bad-freeworld \
     gstreamer1-vaapi \
     heif-pixbuf-loader
 
