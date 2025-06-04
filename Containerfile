@@ -1,5 +1,13 @@
 FROM quay.io/fedora/fedora-silverblue:42
 
+# Metadata labels
+LABEL org.opencontainers.image.title="BlueStream"
+LABEL org.opencontainers.image.description="Custom Fedora Silverblue 42 image for developers with multimedia support"
+LABEL org.opencontainers.image.source="https://github.com/yasershahi/bluestream"
+LABEL org.opencontainers.image.url="https://github.com/yasershahi/bluestream"
+LABEL org.opencontainers.image.vendor="yasershahi"
+LABEL org.opencontainers.image.licenses="GPL-3.0"
+
 # Copy Files
 COPY rootfs/ /
 COPY cosign.pub /etc/pki/containers/
@@ -15,17 +23,18 @@ RUN set -euo pipefail && \
     done
 
 # Add RPM Fusion repositories and build dependencies
-RUN dnf install -y gcc make libxcrypt-compat && \
+RUN --mount=type=cache,target=/var/cache/dnf \
+    dnf install -y gcc make libxcrypt-compat && \
     dnf install -y \
         https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm \
         https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm && \
     dnf install -y terra-release && \
     dnf install -y \
+        container-selinux \
         policycoreutils \
         policycoreutils-python-utils \
         selinux-policy \
-        selinux-policy-targeted \
-        container-selinux && \
+        selinux-policy-targeted && \
     command -v semodule || ln -sf /usr/sbin/semodule /usr/bin/semodule && \
     mkdir -p /etc/selinux && \
     mkdir -p /var/lib/selinux && \
@@ -33,7 +42,8 @@ RUN dnf install -y gcc make libxcrypt-compat && \
     chmod 755 /var/lib/selinux
 
 # System and Developer Tools
-RUN dnf install -y \
+RUN --mount=type=cache,target=/var/cache/dnf \
+    dnf install -y \
     android-tools \
     code \
     containerd.io \
@@ -64,7 +74,8 @@ RUN dnf install -y \
     zstd
 
 # Multimedia
-RUN dnf install -y --allowerasing \
+RUN --mount=type=cache,target=/var/cache/dnf \
+    dnf install -y --allowerasing \
     ffmpeg \
     ffmpeg-libs \
     ffmpegthumbnailer \
@@ -74,7 +85,8 @@ RUN dnf install -y --allowerasing \
     heif-pixbuf-loader
 
 # H/W Video Acceleration
-RUN dnf install -y \
+RUN --mount=type=cache,target=/var/cache/dnf \
+    dnf install -y \
     gstreamer1-plugin-openh264 \
     intel-gpu-tools \
     intel-media-driver \
@@ -84,10 +96,12 @@ RUN dnf install -y \
     openh264
 
 # Web Browsers
-RUN dnf install -y ungoogled-chromium
+RUN --mount=type=cache,target=/var/cache/dnf \
+    dnf install -y ungoogled-chromium
 
 # Remove Packages
-RUN dnf remove -y \
+RUN --mount=type=cache,target=/var/cache/dnf \
+    dnf remove -y \
     fedora-workstation-backgrounds \
     firefox \
     firefox-langpacks \
