@@ -14,34 +14,30 @@ RUN set -euo pipefail && \
         echo "L+ /var/opt/$dirname - - - - /usr/lib/opt/$dirname" >> /usr/lib/tmpfiles.d/opt-fix.conf; \
     done
 
-# Add RPM Fusionss
-RUN dnf install -y gcc make libxcrypt-compat
-RUN dnf install -y https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
+# Add RPM Fusion and Terra repositories, and build dependencies
+RUN dnf install -y gcc make libxcrypt-compat && \
+    dnf install -y \
+        https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm \
+        https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm && \
+    dnf install -y --nogpgcheck --repofrompath "terra,https://repos.fyralabs.com/terra$(rpm -E %fedora)" terra-release
 
-# Additional System Packages
+# System and Developer Tools
 RUN dnf install -y \
-	fastfetch \
-	fish \
-	gnome-themes-extra \
-	gnome-tweaks \
-	ifuse \
-	p7zip \
-	p7zip-plugins \
-	unrar \
-	wl-clipboard \
-	zstd
-
-# Developer Tools
-RUN dnf install -y \
-	code \
-	distrobox \
-	neovim
-
-# Networking Tools
-RUN dnf install -y \
-	cloudflare-warp \
-	nss-tools \
-	tailscale
+    fastfetch \
+    fish \
+    gnome-themes-extra \
+    gnome-tweaks \
+    ifuse \
+    p7zip \
+    p7zip-plugins \
+    unrar \
+    wl-clipboard \
+    zstd \
+    code \
+    distrobox \
+    neovim \
+    nss-tools \
+    tailscale
 
 # Multimedia
 RUN dnf install -y --allowerasing \
@@ -49,25 +45,22 @@ RUN dnf install -y --allowerasing \
 	ffmpeg-libs \
 	ffmpegthumbnailer \
 	gstreamer1-libav \
-        gstreamer1-plugins-bad-freeworld \
-        gstreamer1-vaapi \
+    gstreamer1-plugins-bad-freeworld \
+    gstreamer1-vaapi \
 	heif-pixbuf-loader
 
 # H/W Video Acceleration
 RUN dnf install -y \
-	gstreamer1-plugin-openh264 \
-	libva \
-        libva-intel-driver \
-	libva-utils \
-	mozilla-openh264 \
-	openh264
-
-RUN dnf config-manager setopt fedora-cisco-openh264.enabled=1
+    gstreamer1-plugin-openh264 \
+    libva \
+    libva-intel-driver \
+    libva-utils \
+    openh264 && \
+    dnf config-manager --setopt=fedora-cisco-openh264.enabled=1
 
 # Web Browsers
 RUN dnf install -y \
-	ungoogled-chromium \
-	librewolf
+	brave-browser
 
 # Remove Packages
 RUN dnf remove -y \
@@ -87,15 +80,9 @@ RUN dnf remove -y \
 	make
 
 # Cleanup & Finalize
-RUN rm -rf /tmp/* /var/*
-RUN rm -f /etc/yum.repos.d/_copr:copr.fedorainfracloud.org:phracek:PyCharm.repo && \
-    rm -f /etc/yum.repos.d/fedora-cisco-openh264.repo && \
-    rm -f /etc/yum.repos.d/github.repo && \
-    rm -f /etc/yum.repos.d/vscode.repo && \
-    rm -f /etc/yum/repos.d/librewolf.repo && \
-    rm -f /etc/yum.repos.d/chronoscrat-devpod.repo && \
-    rm -f /etc/yum.repos.d/cloudflare-warp.repo && \
-    rm -f /etc/yum.repos.d/wojnilowicz-ungoogled-chromium.repo && \
+RUN rm -rf /tmp/* /var/* && \
+    rm -f /etc/yum.repos.d/{_copr:copr.fedorainfracloud.org:phracek:PyCharm,fedora-cisco-openh264,github,vscode,chronoscrat-devpod,cloudflare-warp,wojnilowicz-ungoogled-chromium,brave-browser}.repo && \
+    rm -f /etc/yum.repos.d/librewolf.repo && \
     rm -f /etc/xdg/autostart/org.gnome.Software.desktop && \
     systemctl enable flatpak-add-flathub-repo.service && \
     systemctl enable flatpak-replace-fedora-apps.service && \
