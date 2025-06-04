@@ -31,22 +31,32 @@ A custom Fedora Silverblue image built on top of bootc-based Fedora Silverblue w
 - 🌐 **Web Browsers**
   - Brave Browser
 
+## Before Rebasing
+
+It's recommended to pin your current deployment before rebasing. This ensures you can return to your current state if needed:
+
+```bash
+# View available deployments
+rpm-ostree status
+
+# Pin your current deployment (0 is usually the active deployment)
+sudo ostree admin pin 0
+```
+
 ## Rebase to BlueStream
 
 ### Quick Start (Unsigned)
 
 ```bash
 sudo rpm-ostree rebase ostree-unverified-registry:ghcr.io/yasershahi/bluestream:latest
+
+# After the rebase, reboot the system
+systemctl reboot
 ```
 
 ### Verified Rebase (Recommended)
 
 ```bash
-# Import signing key
-curl -O https://raw.githubusercontent.com/yasershahi/bluestream/main/cosign.pub
-sudo mkdir -p /etc/pki/containers
-sudo mv cosign.pub /etc/pki/containers/bluestream.pub
-
 # Rebase to signed image
 sudo rpm-ostree rebase ostree-image-signed:docker://ghcr.io/yasershahi/bluestream:latest
 
@@ -71,3 +81,14 @@ cosign verify --key cosign.pub ghcr.io/yasershahi/bluestream:latest
 - Flathub repository enabled by default
 - Common GNOME extensions removed for a cleaner experience
 - Optimized systemd timeout settings
+
+## Disclaimer
+
+Fedora® is a registered trademark of Red Hat, Inc. This project is not affiliated with, endorsed by, or sponsored by the Fedora Project or Red Hat, Inc.
+
+This image is provided "as is" without warranty of any kind, either express or implied, including but not limited to the warranties of merchantability, fitness for a particular purpose, and non-infringement. In no event shall the authors or copyright holders be liable for any claim, damages, or other liability arising from, out of, or in connection with the image or the use or other dealings in the image.
+
+The user assumes all responsibility for the use of this image, including but not limited to:
+- Backing up data before use
+- Testing compatibility with their hardware and use case
+- Understanding that this is a community project and comes with no warranties or guarantees

@@ -34,6 +34,7 @@ RUN dnf install -y \
     docker-compose-plugin \
     fastfetch \
     fish \
+    gh \
     gnome-themes-extra \
     gnome-tweaks \
     ifuse \
@@ -93,7 +94,7 @@ RUN dnf remove -y \
 
 # Cleanup & Finalize
 RUN rm -rf /tmp/* /var/* && \
-    rm -f /etc/yum.repos.d/{_copr:copr.fedorainfracloud.org:phracek:PyCharm,fedora-cisco-openh264,github,vscode,chronoscrat-devpod,cloudflare-warp,wojnilowicz-ungoogled-chromium,brave-browser,zeno-scrcpy,docker-ce,terra}.repo && \
+    rm -f /etc/yum.repos.d/{_copr:copr.fedorainfracloud.org:phracek:PyCharm,fedora-cisco-openh264,gh-cli,vscode,chronoscrat-devpod,cloudflare-warp,wojnilowicz-ungoogled-chromium,brave-browser,zeno-scrcpy,docker-ce,terra}.repo && \
     rm -f /etc/yum.repos.d/librewolf.repo && \
     rm -f /etc/xdg/autostart/org.gnome.Software.desktop && \
     systemctl enable flatpak-add-flathub-repo.service && \
