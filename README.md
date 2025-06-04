@@ -160,6 +160,16 @@ You may need to log out and log back in for the shell change to take effect.
 
 After these steps, your Fish shell will have a beautiful, fast, and informative prompt!
 
+### (Optional) Install Fisher (Fish Plugin Manager)
+
+Fisher is a popular plugin manager for Fish shell. To install it, run:
+
+```sh
+curl -sL https://raw.githubusercontent.com/jorgebucaran/fisher/main/functions/fisher.fish | source && fisher install jorgebucaran/fisher
+```
+
+For more information and plugin usage, see the [Fisher GitHub page](https://github.com/jorgebucaran/fisher).
+
 ## Disclaimer
 
 Fedora® is a registered trademark of Red Hat, Inc. This project is not affiliated with, endorsed by, or sponsored by the Fedora Project or Red Hat, Inc.
