@@ -32,6 +32,9 @@ RUN dnf install -y gcc make libxcrypt-compat && \
     chmod 755 /etc/selinux && \
     chmod 755 /var/lib/selinux
 
+# Add Flathub Repository
+RUN flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
+
 # System and Developer Tools
 RUN dnf install -y \
     android-tools \
