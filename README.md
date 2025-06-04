@@ -134,6 +134,16 @@ Fish shell is included in this image. If you wish to use it as your default shel
    ```
 You may need to log out and log back in for the shell change to take effect.
 
+### (Optional) Install Fisher (Fish Plugin Manager)
+
+Fisher is a popular plugin manager for Fish shell. To install it, run:
+
+```sh
+curl -sL https://raw.githubusercontent.com/jorgebucaran/fisher/main/functions/fisher.fish | source && fisher install jorgebucaran/fisher
+```
+
+For more information and plugin usage, see the [Fisher GitHub page](https://github.com/jorgebucaran/fisher).
+
 ### (Optional) Enhance Your Fish Shell with Starship Prompt
 
 1. **Install a Nerd Font** (required for best Starship experience):
@@ -162,15 +172,36 @@ You may need to log out and log back in for the shell change to take effect.
 
 After these steps, your Fish shell will have a beautiful, fast, and informative prompt!
 
-### (Optional) Install Fisher (Fish Plugin Manager)
+### Container Development with Toolbox and Distrobox
 
-Fisher is a popular plugin manager for Fish shell. To install it, run:
+BlueStream includes both Toolbox and Distrobox for containerized development environments.
 
-```sh
-curl -sL https://raw.githubusercontent.com/jorgebucaran/fisher/main/functions/fisher.fish | source && fisher install jorgebucaran/fisher
-```
+#### Toolbox Setup
+Toolbox provides a Fedora container that works like a regular Fedora workstation:
 
-For more information and plugin usage, see the [Fisher GitHub page](https://github.com/jorgebucaran/fisher).
+1. **Create and enter a toolbox:**
+   ```sh
+   toolbox enter
+   ```
+   This will automatically set up a Fedora container on first run.
+
+2. **Access named toolboxes:**
+   ```sh
+   toolbox enter <name>
+   ```
+
+3. **GUI access:** Toolboxes appear in your default terminal.
+
+For more information, visit the [Toolbox documentation](https://containertoolbx.org/).
+
+#### Distrobox for Multi-Distribution Support
+For access to other Linux distributions, Distrobox is recommended:
+
+1. **Install a GUI manager** (choose one):
+   - [DistroShelf](https://flathub.org/apps/com.ranfdev.DistroShelf) - `flatpak install flathub com.ranfdev.DistroShelf`
+   - [BoxBuddy](https://flathub.org/apps/io.github.dvlv.boxbuddyrs) - `flatpak install flathub io.github.dvlv.boxbuddyrs`
+
+2. **Benefits:** Access to any distribution's packages - from Debian/Ubuntu repositories to Arch AUR packages, all in friendly GUI app.
 
 ## Disclaimer
 
