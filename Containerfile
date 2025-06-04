@@ -48,6 +48,7 @@ RUN dnf install -y \
     docker-compose-plugin \
     fastfetch \
     fish \
+    fzf \
     gh \
     gnome-themes-extra \
     gnome-tweaks \
@@ -123,4 +124,6 @@ RUN rm -rf /tmp/* && \
     sed -i 's/#DefaultTimeoutStopSec.*/DefaultTimeoutStopSec=15s/' /etc/systemd/user.conf && \
     sed -i 's/#DefaultTimeoutStopSec.*/DefaultTimeoutStopSec=15s/' /etc/systemd/system.conf && \
     dnf clean all
-   
+
+# Verify Installation
+RUN rpm -q brave-browser || exit 1
