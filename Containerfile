@@ -19,7 +19,13 @@ RUN dnf install -y gcc make libxcrypt-compat && \
     dnf install -y \
         https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm \
         https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm && \
-    dnf install -y terra-release
+    dnf install -y terra-release && \
+    dnf install -y \
+        policycoreutils \
+        policycoreutils-python-utils \
+        selinux-policy \
+        selinux-policy-targeted \
+        container-selinux
 
 # System and Developer Tools
 RUN dnf install -y \
@@ -42,7 +48,6 @@ RUN dnf install -y \
     neovim \
     nss-tools \
     p7zip \
-    policycoreutils \
     p7zip-plugins \
     podman-compose \
     scrcpy \
