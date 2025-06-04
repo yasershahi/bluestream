@@ -32,9 +32,6 @@ RUN dnf install -y gcc make libxcrypt-compat && \
     chmod 755 /etc/selinux && \
     chmod 755 /var/lib/selinux
 
-# Add Flathub Repository
-RUN flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
-
 # System and Developer Tools
 RUN dnf install -y \
     android-tools \
@@ -90,7 +87,9 @@ RUN dnf install -y \
 RUN dnf install -y \
     liberation-fonts-all \
     brave-keyring \
-	brave-browser
+    brave-browser && \
+    update-alternatives --install /usr/bin/brave-browser brave-browser /opt/brave.com/brave/brave-browser 100 && \
+    update-alternatives --set brave-browser /opt/brave.com/brave/brave-browser
 
 # Remove Packages
 RUN dnf remove -y \
@@ -114,7 +113,7 @@ RUN rm -rf /tmp/* && \
     rm -rf /var/cache/dnf/* /var/log/* /var/tmp/* && \
     mkdir -p /var/cache /var/log /var/tmp && \
     chmod 1777 /var/tmp && \
-    rm -f /etc/yum.repos.d/{_copr:copr.fedorainfracloud.org:phracek:PyCharm,fedora-cisco-openh264,gh-cli,vscode,chronoscrat-devpod,cloudflare-warp,wojnilowicz-ungoogled-chromium,brave-browser,zeno-scrcpy,docker-ce,terra}.repo && \
+    rm -f /etc/yum.repos.d/{_copr:copr.fedorainfracloud.org:phracek:PyCharm,fedora-cisco-openh264,gh-cli,vscode,chronoscrat-devpod,cloudflare-warp,wojnilowicz-ungoogled-chromium,zeno-scrcpy,docker-ce,terra}.repo && \
     rm -f /etc/yum.repos.d/librewolf.repo && \
     rm -f /etc/xdg/autostart/org.gnome.Software.desktop && \
     systemctl enable flatpak-add-flathub-repo.service && \
