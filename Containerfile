@@ -5,14 +5,14 @@ COPY rootfs/ /
 COPY cosign.pub /etc/pki/containers/
 
 # Fix /opt directory (by Universal Blue)
-# RUN set -euo pipefail && \
-#     mkdir -p /var/opt /usr/lib/opt && \
-#     for dir in /var/opt/*/; do \
-#         [ -d "$dir" ] || continue; \
-#         dirname=$(basename "$dir"); \
-#         mv "$dir" "/usr/lib/opt/$dirname" || { echo "Failed to move $dir"; exit 1; }; \
-#         echo "L+ /var/opt/$dirname - - - - /usr/lib/opt/$dirname" >> /usr/lib/tmpfiles.d/opt-fix.conf; \
-#     done
+RUN set -euo pipefail && \
+    mkdir -p /var/opt /usr/lib/opt && \
+    for dir in /var/opt/*/; do \
+        [ -d "$dir" ] || continue; \
+        dirname=$(basename "$dir"); \
+        mv "$dir" "/usr/lib/opt/$dirname" || { echo "Failed to move $dir"; exit 1; }; \
+        echo "L+ /var/opt/$dirname - - - - /usr/lib/opt/$dirname" >> /usr/lib/tmpfiles.d/opt-fix.conf; \
+    done
 
 # Add RPM Fusion repositories and build dependencies
 RUN dnf install -y gcc make libxcrypt-compat && \
@@ -87,6 +87,8 @@ RUN dnf install -y \
 
 # Web Browsers
 RUN dnf install -y \
+    liberation-fonts-all \
+    brave-keyring \
 	brave-browser
 
 # Remove Packages
