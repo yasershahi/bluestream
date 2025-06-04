@@ -42,6 +42,7 @@ RUN dnf install -y \
     neovim \
     nss-tools \
     p7zip \
+    policycoreutils \
     p7zip-plugins \
     podman-compose \
     scrcpy \
