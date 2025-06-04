@@ -6,7 +6,6 @@ COPY cosign.pub /etc/pki/containers/
 
 # Fix /opt directory (by Universal Blue)
 RUN set -euo pipefail && \
-    mkdir -p /root/.gnupg && \
     mkdir -p /var/opt /usr/lib/opt && \
     for dir in /var/opt/*/; do \
         [ -d "$dir" ] || continue; \
@@ -16,7 +15,8 @@ RUN set -euo pipefail && \
     done
 
 # Add RPM Fusion repositories and build dependencies
-RUN dnf install -y gcc make libxcrypt-compat && \
+RUN mkdir -p /root/.gnupg && \
+    dnf install -y gcc make libxcrypt-compat && \
     dnf install -y \
         https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm \
         https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm && \
