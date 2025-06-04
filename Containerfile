@@ -5,18 +5,17 @@ COPY rootfs/ /
 COPY cosign.pub /etc/pki/containers/
 
 # Fix /opt directory (by Universal Blue)
-RUN set -euo pipefail && \
-    mkdir -p /var/opt /usr/lib/opt && \
-    for dir in /var/opt/*/; do \
-        [ -d "$dir" ] || continue; \
-        dirname=$(basename "$dir"); \
-        mv "$dir" "/usr/lib/opt/$dirname" || { echo "Failed to move $dir"; exit 1; }; \
-        echo "L+ /var/opt/$dirname - - - - /usr/lib/opt/$dirname" >> /usr/lib/tmpfiles.d/opt-fix.conf; \
-    done
+# RUN set -euo pipefail && \
+#     mkdir -p /var/opt /usr/lib/opt && \
+#     for dir in /var/opt/*/; do \
+#         [ -d "$dir" ] || continue; \
+#         dirname=$(basename "$dir"); \
+#         mv "$dir" "/usr/lib/opt/$dirname" || { echo "Failed to move $dir"; exit 1; }; \
+#         echo "L+ /var/opt/$dirname - - - - /usr/lib/opt/$dirname" >> /usr/lib/tmpfiles.d/opt-fix.conf; \
+#     done
 
 # Add RPM Fusion repositories and build dependencies
-RUN mkdir -p /root/.gnupg && \
-    dnf install -y gcc make libxcrypt-compat && \
+RUN dnf install -y gcc make libxcrypt-compat && \
     dnf install -y \
         https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm \
         https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm && \
@@ -67,13 +66,12 @@ RUN dnf install -y \
     zstd
 
 # Multimedia
-RUN export GNUPGHOME=/var/tmp/gnupg && \
-    mkdir -p $GNUPGHOME && \
-    dnf install -y --allowerasing \
+RUN dnf install -y --allowerasing \
     ffmpeg \
     ffmpeg-libs \
     ffmpegthumbnailer \
     gstreamer1-libav \
+    gstreamer1-plugins-bad-freeworld \
     gstreamer1-vaapi \
     heif-pixbuf-loader
 
@@ -113,7 +111,7 @@ RUN rm -rf /tmp/* && \
     rm -rf /var/cache/dnf/* /var/log/* /var/tmp/* && \
     mkdir -p /var/cache /var/log /var/tmp && \
     chmod 1777 /var/tmp && \
-    rm -f /etc/yum.repos.d/{_copr:copr.fedorainfracloud.org:phracek:PyCharm,fedora-cisco-openh264,gh-cli,vscode,chronoscrat-devpod,cloudflare-warp,wojnilowicz-ungoogled-chromium,zeno-scrcpy,docker-ce,terra}.repo && \
+    rm -f /etc/yum.repos.d/{_copr:copr.fedorainfracloud.org:phracek:PyCharm,fedora-cisco-openh264,gh-cli,vscode,chronoscrat-devpod,cloudflare-warp,wojnilowicz-ungoogled-chromium,brave-browser,zeno-scrcpy,docker-ce,terra}.repo && \
     rm -f /etc/yum.repos.d/librewolf.repo && \
     rm -f /etc/xdg/autostart/org.gnome.Software.desktop && \
     systemctl enable flatpak-add-flathub-repo.service && \
@@ -123,4 +121,4 @@ RUN rm -rf /tmp/* && \
     sed -i 's/#DefaultTimeoutStopSec.*/DefaultTimeoutStopSec=15s/' /etc/systemd/user.conf && \
     sed -i 's/#DefaultTimeoutStopSec.*/DefaultTimeoutStopSec=15s/' /etc/systemd/system.conf && \
     dnf clean all
-
+   
