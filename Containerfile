@@ -14,17 +14,16 @@ RUN set -euo pipefail && \
         echo "L+ /var/opt/$dirname - - - - /usr/lib/opt/$dirname" >> /usr/lib/tmpfiles.d/opt-fix.conf; \
     done
 
-# Add RPM Fusion and Terra repositories, and build dependencies
+# Add RPM Fusion repositories and build dependencies
 RUN dnf install -y gcc make libxcrypt-compat && \
     dnf install -y \
         https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm \
         https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm && \
-    dnf install -y --nogpgcheck --repofrompath "terra,https://repos.fyralabs.com/terra$(rpm -E %fedora)" terra-release
+    dnf install -y terra-release
 
 # System and Developer Tools
 RUN dnf install -y \
     android-tools \
-    bootc \
     code \
     containerd.io \
     devpod \
@@ -43,7 +42,6 @@ RUN dnf install -y \
     nss-tools \
     p7zip \
     p7zip-plugins \
-    podman-bootc \
     podman-compose \
     scrcpy \
     tailscale \
@@ -95,7 +93,7 @@ RUN dnf remove -y \
 
 # Cleanup & Finalize
 RUN rm -rf /tmp/* /var/* && \
-    rm -f /etc/yum.repos.d/{_copr:copr.fedorainfracloud.org:phracek:PyCharm,fedora-cisco-openh264,github,vscode,chronoscrat-devpod,cloudflare-warp,wojnilowicz-ungoogled-chromium,brave-browser,zeno-scrcpy,docker-ce}.repo && \
+    rm -f /etc/yum.repos.d/{_copr:copr.fedorainfracloud.org:phracek:PyCharm,fedora-cisco-openh264,github,vscode,chronoscrat-devpod,cloudflare-warp,wojnilowicz-ungoogled-chromium,brave-browser,zeno-scrcpy,docker-ce,terra}.repo && \
     rm -f /etc/yum.repos.d/librewolf.repo && \
     rm -f /etc/xdg/autostart/org.gnome.Software.desktop && \
     systemctl enable flatpak-add-flathub-repo.service && \

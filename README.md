@@ -1,8 +1,8 @@
 # BlueStream
 
-A custom Fedora Silverblue image with additional tools and optimizations for developers and power users. Built on top of [Universal Blue](https://universal-blue.org/).
+A custom Fedora Silverblue image built on top of bootc-based Fedora Silverblue with RPM Fusion (free & nonfree) and Terra repositories enabled. Optimized for developers and power users with additional tools and multimedia support.
 
-[![Build](https://github.com/yourusername/bluestream/actions/workflows/build.yml/badge.svg)](https://github.com/yourusername/bluestream/actions/workflows/build.yml)
+[![Build](https://github.com/yasershahi/bluestream/actions/workflows/build.yml/badge.svg)](https://github.com/yasershahi/bluestream/actions/workflows/build.yml)
 
 ## Features
 
