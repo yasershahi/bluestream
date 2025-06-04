@@ -76,6 +76,8 @@ Note: While bootc doesn't handle signature verification automatically, you can m
 - Common GNOME extensions removed for a cleaner experience
 - Optimized systemd timeout settings
 
+> **Notice:** After first boot, the flatpak-replace-fedora-apps service will automatically remove applications installed from the Fedora Flatpak repository and replace them with their Flathub versions. Consider that this process will use additional internet traffic to download the Flathub versions of those apps.
+
 ## Post-install Steps (Optional)
 
 After installing BlueStream, you may want to perform some additional setup for a better experience:
