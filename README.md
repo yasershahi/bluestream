@@ -10,7 +10,6 @@ A custom Fedora Silverblue 42 image built on top of bootc-based Fedora Silverblu
   - VS Code
   - Docker & Podman with Compose
   - Distrobox
-  - DevPod
   - Android Tools & Scrcpy
   - Neovim
   - tmux
@@ -29,7 +28,7 @@ A custom Fedora Silverblue 42 image built on top of bootc-based Fedora Silverblu
   - Tailscale
 
 - 🌐 **Web Browsers**
-  - Brave Browser
+  - Ungoogled Chromium
 
 ## Before Rebasing
 

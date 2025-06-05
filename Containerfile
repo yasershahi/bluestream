@@ -47,7 +47,6 @@ RUN --mount=type=cache,target=/var/cache/dnf \
     android-tools \
     code \
     containerd.io \
-    devpod \
     distrobox \
     docker-buildx-plugin \
     docker-ce \
