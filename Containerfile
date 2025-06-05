@@ -23,8 +23,7 @@ RUN set -euo pipefail && \
     done
 
 # Add RPM Fusion repositories and build dependencies
-RUN --mount=type=cache,target=/var/cache/dnf \
-    dnf install -y gcc make libxcrypt-compat && \
+RUN dnf install -y gcc make libxcrypt-compat && \
     dnf install -y \
         https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm \
         https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm && \
@@ -42,8 +41,7 @@ RUN --mount=type=cache,target=/var/cache/dnf \
     chmod 755 /var/lib/selinux
 
 # System and Developer Tools
-RUN --mount=type=cache,target=/var/cache/dnf \
-    dnf install -y \
+RUN dnf install -y \
     android-tools \
     code \
     containerd.io \
@@ -73,8 +71,7 @@ RUN --mount=type=cache,target=/var/cache/dnf \
     zstd
 
 # Multimedia
-RUN --mount=type=cache,target=/var/cache/dnf \
-    dnf install -y --allowerasing \
+RUN dnf install -y --allowerasing \
     ffmpeg \
     ffmpeg-libs \
     ffmpegthumbnailer \
@@ -84,8 +81,7 @@ RUN --mount=type=cache,target=/var/cache/dnf \
     heif-pixbuf-loader
 
 # H/W Video Acceleration
-RUN --mount=type=cache,target=/var/cache/dnf \
-    dnf install -y \
+RUN dnf install -y \
     gstreamer1-plugin-openh264 \
     intel-gpu-tools \
     intel-media-driver \
@@ -95,12 +91,10 @@ RUN --mount=type=cache,target=/var/cache/dnf \
     openh264
 
 # Web Browsers
-RUN --mount=type=cache,target=/var/cache/dnf \
-    dnf install -y ungoogled-chromium
+RUN dnf install -y ungoogled-chromium
 
 # Remove Packages
-RUN --mount=type=cache,target=/var/cache/dnf \
-    dnf remove -y \
+RUN dnf remove -y \
     fedora-workstation-backgrounds \
     firefox \
     firefox-langpacks \
