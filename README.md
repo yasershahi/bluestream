@@ -150,15 +150,16 @@ For more information and plugin usage, see the [Fisher GitHub page](https://gith
 
 2. **Install Starship prompt:**
    ```sh
-   curl -sS https://starship.rs/install.sh | sh
+   curl -fsSL https://starship.rs/install.sh | bash -s -- -b $HOME/.local/bin
    ```
 
 3. **Configure Fish shell to initialize Starship:**
    ```sh
    nano ~/.config/fish/config.fish
    ```
-   Add this line to the end of the file:
+   Add this lines to the end of the file:
    ```sh
+   set -U fish_user_paths $HOME/.local/bin $fish_user_paths
    starship init fish | source
    ```
 
