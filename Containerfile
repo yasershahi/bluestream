@@ -43,7 +43,6 @@ RUN dnf install -y gcc make libxcrypt-compat && \
 RUN dnf install -y \
     android-tools \
     baobab \
-    genisoimage \
     gnome-themes-extra \
     gnome-tweaks \
     ifuse \
@@ -57,10 +56,6 @@ RUN dnf install -y \
     zstd
 
 # Development Tools
-RUN dnf install -y \
-    ansible
-
-# Frequently Updated Tools
 RUN dnf install -y \
     code
 
@@ -98,6 +93,9 @@ RUN dnf install -y \
     qemu-kvm-core \
     qemu-system-x86
 
+ENV LXD_DIR=/var/lib/lxc
+RUN mkdir -p ${LXD_DIR}
+
 # Remove Packages
 RUN dnf remove -y \
     gcc \
@@ -116,8 +114,7 @@ RUN rm -rf /tmp/* && \
     rm -rf /var/cache/dnf/* /var/log/* /var/tmp/* && \
     mkdir -p /var/cache /var/log /var/tmp && \
     chmod 1777 /var/tmp && \
-    rm -f /etc/yum.repos.d/{_copr:copr.fedorainfracloud.org:phracek:PyCharm,fedora-cisco-openh264,gh-cli,vscode,chronoscrat-devpod,cloudflare-warp,wojnilowicz-ungoogled-chromium,zeno-scrcpy,docker-ce,terra}.repo && \
-    rm -f /etc/yum.repos.d/librewolf.repo && \
+    rm -f /etc/yum.repos.d/{zeno-scrcpy,vscode}.repo && \
     rm -f /etc/xdg/autostart/org.gnome.Software.desktop && \
     systemctl enable flatpak-add-flathub-repo.service && \
     systemctl enable flatpak-replace-fedora-apps.service && \
