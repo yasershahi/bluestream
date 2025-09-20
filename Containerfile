@@ -50,20 +50,11 @@ RUN dnf install -y \
 RUN dnf install -y \
     incus
 
-# Remove Packages
+# Cleanup & Finalize
 RUN dnf remove -y \
     gcc \
-    gnome-classic-session \
-    gnome-shell-extension-apps-menu \
-    gnome-shell-extension-background-logo \
-    gnome-shell-extension-common \
-    gnome-shell-extension-launch-new-instance \
-    gnome-shell-extension-places-menu \
-    gnome-shell-extension-window-list \
-    gnome-tour \
     make
 
-# Cleanup & Finalize
 RUN rm -rf /tmp/* && \
     rm -rf /var/cache/dnf/* /var/log/* /var/tmp/* && \
     mkdir -p /var/cache /var/log /var/tmp && \
