@@ -1,8 +1,8 @@
 # BlueStream
 [![Build](https://github.com/yasershahi/bluestream/actions/workflows/build.yml/badge.svg)](https://github.com/yasershahi/bluestream/actions/workflows/build.yml)
 
-> **Important Notice:**  
-> This custom Fedora Silverblue Bootc image is provided as an example only. **Do not use it in production or deploy it to your devices without thoroughly reviewing and testing it first**.
+> **Important:**  
+> This custom Fedora Silverblue Bootc image is provided as an example only. Feel free to fork and customize for your own use!
 
 ## Rebasing
 
