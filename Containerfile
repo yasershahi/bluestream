@@ -39,11 +39,10 @@ RUN dnf install -y gcc make libxcrypt-compat && \
     chmod 755 /etc/selinux && \
     chmod 755 /var/lib/selinux
 
-# System and Developer Tools
+# Core System Tools
 RUN dnf install -y \
     android-tools \
-    ansible \
-    code \
+    baobab \
     genisoimage \
     gnome-themes-extra \
     gnome-tweaks \
@@ -57,6 +56,14 @@ RUN dnf install -y \
     wl-clipboard \
     zstd
 
+# Development Tools
+RUN dnf install -y \
+    ansible
+
+# Frequently Updated Tools
+RUN dnf install -y \
+    code
+
 # Multimedia
 RUN dnf install -y --allowerasing \
     ffmpeg \
@@ -68,7 +75,7 @@ RUN dnf install -y --allowerasing \
     gstreamer1-plugins-ugly \
     gstreamer1-vaapi
 
-# H/W Video Acceleration
+# Hardware Acceleration
 RUN dnf install -y \
     gstreamer1-plugin-openh264 \
     intel-gpu-tools \
