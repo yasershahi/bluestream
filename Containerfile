@@ -1,8 +1,8 @@
-FROM quay.io/fedora/fedora-silverblue:42
+FROM quay.io/fedora/fedora-silverblue:43
 
 # Metadata labels
 LABEL org.opencontainers.image.title="BlueStream"
-LABEL org.opencontainers.image.description="Custom Fedora Silverblue 42 image for developers with multimedia support"
+LABEL org.opencontainers.image.description="Personal Fedora Silverblue 43 image"
 LABEL org.opencontainers.image.source="https://github.com/yasershahi/bluestream"
 LABEL org.opencontainers.image.url="https://github.com/yasershahi/bluestream"
 LABEL org.opencontainers.image.vendor="yasershahi"
@@ -27,7 +27,6 @@ RUN dnf install -y gcc make libxcrypt-compat && \
     dnf install -y \
         https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm \
         https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm && \
-    dnf install -y terra-release && \
     dnf install -y \
         container-selinux \
         policycoreutils \
@@ -43,29 +42,17 @@ RUN dnf install -y gcc make libxcrypt-compat && \
 # System and Developer Tools
 RUN dnf install -y \
     android-tools \
+    ansible \
     code \
-    containerd.io \
-    distrobox \
-    docker-buildx-plugin \
-    docker-ce \
-    docker-ce-cli \
-    docker-compose-plugin \
-    fastfetch \
-    fish \
-    fzf \
-    gh \
+    genisoimage \
     gnome-themes-extra \
     gnome-tweaks \
     ifuse \
-    lm_sensors \
-    neovim \
     nss-tools \
     p7zip \
     p7zip-plugins \
-    podman-compose \
     scrcpy \
     tailscale \
-    tmux \
     unrar \
     wl-clipboard \
     zstd
@@ -76,9 +63,10 @@ RUN dnf install -y --allowerasing \
     ffmpeg-libs \
     ffmpegthumbnailer \
     gstreamer1-libav \
+    gstreamer1-plugins-bad-free-extras \
     gstreamer1-plugins-bad-freeworld \
-    gstreamer1-vaapi \
-    heif-pixbuf-loader
+    gstreamer1-plugins-ugly \
+    gstreamer1-vaapi
 
 # H/W Video Acceleration
 RUN dnf install -y \
@@ -88,16 +76,23 @@ RUN dnf install -y \
     libva \
     libva-intel-driver \
     libva-utils \
+    mesa-va-drivers-freeworld \
+    mesa-vdpau-drivers-freeworld \
+    mozilla-openh264 \
     openh264
 
-# Web Browsers
-RUN dnf install -y ungoogled-chromium
+# Virtualization
+RUN dnf install -y \
+    edk2-ovmf \
+    incus \
+    qemu-device-display-virtio-vga \
+    qemu-device-usb-redirect \
+    qemu-img \
+    qemu-kvm-core \
+    qemu-system-x86
 
 # Remove Packages
 RUN dnf remove -y \
-    fedora-workstation-backgrounds \
-    firefox \
-    firefox-langpacks \
     gcc \
     gnome-classic-session \
     gnome-shell-extension-apps-menu \
@@ -106,7 +101,6 @@ RUN dnf remove -y \
     gnome-shell-extension-launch-new-instance \
     gnome-shell-extension-places-menu \
     gnome-shell-extension-window-list \
-    gnome-software-rpm-ostree \
     gnome-tour \
     make
 

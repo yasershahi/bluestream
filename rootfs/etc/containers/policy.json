@@ -20,7 +20,7 @@
                     "keyPath": "/etc/pki/rpm-gpg/RPM-GPG-KEY-redhat-release"
                 }
             ],
-            "ghcr.io/aguslr": [
+            "ghcr.io/yasershahi": [
                 {
                     "type": "sigstoreSigned",
                     "keyPath": "/etc/pki/containers/cosign.pub",
