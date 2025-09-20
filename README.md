@@ -2,7 +2,7 @@
 [![Build](https://github.com/yasershahi/bluestream/actions/workflows/build.yml/badge.svg)](https://github.com/yasershahi/bluestream/actions/workflows/build.yml)
 
 > **Attention:**  
-> It is my custom Fedora Silverblue Bootc image — provided as an example. Do not deploy it to your devices without reviewing and testing first!
+> This custom Fedora Silverblue Bootc image — provided as an example. Do not deploy it to your devices without reviewing and testing first!
 
 ## Rebasing
 
@@ -35,12 +35,9 @@ sudo bootc switch ghcr.io/yasershahi/bluestream:43
 systemctl reboot
 ```
 
-> **Note:**  
-> Bootc doesn't handle signature verification automatically.
 
 ## Customizations
 
-### Changes
 * Disabled NetworkManager-wait-online service
 * Disabled GNOME Software autostart
 * Switched to Flathub repository
@@ -49,18 +46,14 @@ systemctl reboot
 
 ### Additions
 * Intel GPU hardware video acceleration via RPM Fusion
-* Media Codecs (FFmpeg, GStreamer plugins)
+* Media Codecs
 * Android Tools & Scrcpy
-* Development Tools (Ansible, VS Code, genisoimage)
 * Virtualization (QEMU/KVM, Incus, EDK2-OVMF)
-* Compression Tools (p7zip & unrar)
-* Network Tools (Tailscale)
-* Desktop Customization (Gnome Tweaks & Gnome Themes Extra)
-* Additional Hardware Acceleration (Mesa drivers, OpenH264)
+* Tailscale
+* Gnome Themes Extra
+* Misc (unrar, nss-tools,...)
 
-### Removals
-* Default GNOME extensions
 
 ## Disclaimer
 
-Fedora® is a registered trademark of Red Hat, Inc. This project is not affiliated with, endorsed by, or sponsored by the Fedora Project or Red Hat, Inc.
+This project is not affiliated with, endorsed by, or sponsored by the Fedora Project or Red Hat, Inc.

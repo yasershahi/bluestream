@@ -4,32 +4,11 @@ FROM quay.io/fedora/fedora-silverblue:43
 COPY rootfs/ /
 COPY cosign.pub /etc/pki/containers/
 
-# Fix /opt directory (by Universal Blue)
-# RUN set -euo pipefail && \
-#     mkdir -p /var/opt /usr/lib/opt && \
-#     for dir in /var/opt/*/; do \
-#         [ -d "$dir" ] || continue; \
-#         dirname=$(basename "$dir"); \
-#         mv "$dir" "/usr/lib/opt/$dirname" || { echo "Failed to move $dir"; exit 1; }; \
-#         echo "L+ /var/opt/$dirname - - - - /usr/lib/opt/$dirname" >> /usr/lib/tmpfiles.d/opt-fix.conf; \
-#     done
-
 # Add RPM Fusion repositories and build dependencies
 RUN dnf install -y gcc make libxcrypt-compat && \
     dnf install -y \
         https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm \
         https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
-    # dnf install -y \
-    #     container-selinux \
-    #     policycoreutils \
-    #     policycoreutils-python-utils \
-    #     selinux-policy \
-    #     selinux-policy-targeted && \
-    # command -v semodule || ln -sf /usr/sbin/semodule /usr/bin/semodule && \
-    # mkdir -p /etc/selinux && \
-    # mkdir -p /var/lib/selinux && \
-    # chmod 755 /etc/selinux && \
-    # chmod 755 /var/lib/selinux
 
 # Core System Tools
 RUN dnf install -y \
