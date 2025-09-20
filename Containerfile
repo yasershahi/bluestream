@@ -86,15 +86,14 @@ RUN dnf install -y \
 # Virtualization
 RUN dnf install -y \
     edk2-ovmf \
-    incus \
     qemu-device-display-virtio-vga \
     qemu-device-usb-redirect \
     qemu-img \
     qemu-kvm-core \
     qemu-system-x86
 
-ENV LXD_DIR=/var/lib/lxc
-RUN mkdir -p ${LXD_DIR}
+RUN dnf install -y \
+    incus
 
 # Remove Packages
 RUN dnf remove -y \
