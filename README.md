@@ -35,16 +35,7 @@ sudo bootc switch ghcr.io/yasershahi/bluestream:43
 systemctl reboot
 ```
 
-
-## Customizations
-
-* Disabled NetworkManager-wait-online service
-* Disabled GNOME Software autostart
-* Switched to Flathub repository
-* Automatically replace Fedora Flatpak apps with Flathub versions
-* Optimized systemd timeout settings
-
-### Additions
+## Additions
 * Intel GPU hardware video acceleration via RPM Fusion
 * Media Codecs
 * Android Tools & Scrcpy
