@@ -17,7 +17,9 @@ RUN dnf install -y \
     gnome-themes-extra \
     ifuse \
     nss-tools \
+    papers \
     scrcpy \
+    showtime \
     tailscale \
     unrar
 
@@ -60,11 +62,4 @@ RUN rm -rf /tmp/* && \
     mkdir -p /var/cache /var/log /var/tmp && \
     chmod 1777 /var/tmp && \
     rm -f /etc/yum.repos.d/zeno-scrcpy.repo && \
-    rm -f /etc/xdg/autostart/org.gnome.Software.desktop && \
-    systemctl enable flatpak-add-flathub-repo.service && \
-    systemctl enable flatpak-replace-fedora-apps.service && \
-    systemctl enable flatpak-cleanup.timer && \
-    systemctl disable NetworkManager-wait-online.service && \
-    sed -i 's/#DefaultTimeoutStopSec.*/DefaultTimeoutStopSec=15s/' /etc/systemd/user.conf && \
-    sed -i 's/#DefaultTimeoutStopSec.*/DefaultTimeoutStopSec=15s/' /etc/systemd/system.conf && \
     dnf clean all
