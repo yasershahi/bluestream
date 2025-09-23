@@ -4,7 +4,7 @@ FROM quay.io/fedora/fedora-silverblue:43
 COPY rootfs/ /
 COPY cosign.pub /etc/pki/containers/
 
-# Add RPM Fusion repositories and build dependencies
+# Add RPM Fusion
 RUN dnf install -y gcc make libxcrypt-compat && \
     dnf install -y \
         https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm \
