@@ -18,6 +18,7 @@ RUN dnf install -y \
     ifuse \
     nss-tools \
     papers \
+    s3fs-fuse \
     scrcpy \
     showtime \
     tailscale \
