@@ -14,8 +14,12 @@ RUN dnf install -y gcc make libxcrypt-compat && \
 RUN dnf install -y \
     android-tools \
     baobab \
+    fzf \
     gnome-themes-extra \
     ifuse \
+    neovim \
+    nmap \
+    tcpdump \
     nss-tools \
     papers \
     s3fs-fuse \
