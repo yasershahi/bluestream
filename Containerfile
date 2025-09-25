@@ -20,7 +20,6 @@ RUN dnf install -y \
     papers \
     s3fs-fuse \
     scrcpy \
-    showtime \
     tailscale \
     unrar
 
