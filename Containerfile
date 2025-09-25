@@ -29,7 +29,8 @@ RUN dnf install -y --allowerasing \
     ffmpegthumbnailer \
     gstreamer1-plugins-bad-free-extras \
     gstreamer1-plugins-ugly \
-    gstreamer1-vaapi
+    gstreamer1-vaapi \
+    libavcodec-freeworld
 
 # Hardware Acceleration
 RUN dnf install -y \
