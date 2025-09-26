@@ -14,16 +14,12 @@ RUN dnf install -y gcc make libxcrypt-compat && \
 RUN dnf install -y \
     android-tools \
     baobab \
-    fzf \
+    distrobox \
     gnome-themes-extra \
     ifuse \
-    neovim \
-    nmap \
-    tcpdump \
-    nss-tools \
     papers \
-    s3fs-fuse \
     scrcpy \
+    showtime \
     tailscale \
     unrar
 
@@ -31,18 +27,13 @@ RUN dnf install -y \
 RUN dnf install -y --allowerasing \
     ffmpeg \
     ffmpegthumbnailer \
-    gstreamer1-plugins-bad-free-extras \
-    gstreamer1-plugins-ugly \
     gstreamer1-vaapi \
     libavcodec-freeworld
 
 # Hardware Acceleration
 RUN dnf install -y \
     gstreamer1-plugin-openh264 \
-    intel-media-driver \
     libva-intel-driver \
-    mesa-va-drivers-freeworld \
-    mesa-vdpau-drivers-freeworld \
     mozilla-openh264
 
 # Virtualization
