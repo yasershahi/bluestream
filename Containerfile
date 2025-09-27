@@ -15,11 +15,14 @@ RUN dnf install -y \
     android-tools \
     baobab \
     distrobox \
+    flatpak-spawn \
     gnome-themes-extra \
+    host-spawn \
     ifuse \
     papers \
     scrcpy \
     showtime \
+    systemd-nspawn \
     moby-engine \
     docker-compose \
     tailscale \
