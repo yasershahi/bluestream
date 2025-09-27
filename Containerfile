@@ -20,6 +20,8 @@ RUN dnf install -y \
     papers \
     scrcpy \
     showtime \
+    moby-engine \
+    docker-compose \
     tailscale \
     unrar
 
