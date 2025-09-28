@@ -55,8 +55,8 @@ RUN dnf install -y \
 
 # Sway WM
 RUN dnf install -y \
-    hyperland \
-    xdg-desktop-portal-hyperland
+    hyprland \
+    xdg-desktop-portal-hyprland
 
 # Cleanup & Finalize
 RUN dnf remove -y \
