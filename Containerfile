@@ -53,11 +53,6 @@ RUN dnf install -y \
 RUN dnf install -y \
     incus
 
-# Sway WM
-RUN dnf install -y \
-    hyprland \
-    xdg-desktop-portal-hyprland
-
 # Cleanup & Finalize
 RUN dnf remove -y \
     gcc \
