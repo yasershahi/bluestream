@@ -53,6 +53,11 @@ RUN dnf install -y \
 RUN dnf install -y \
     incus
 
+# Sway WM
+RUN dnf install -y \
+    sway \
+    sway-config-fedora
+
 # Cleanup & Finalize
 RUN dnf remove -y \
     gcc \
