@@ -55,9 +55,8 @@ RUN dnf install -y \
 
 # Sway WM
 RUN dnf install -y \
-    sway \
-    sway-config-fedora \
-    xdg-desktop-portal-wlr
+    hyperland \
+    xdg-desktop-portal-hyperland
 
 # Cleanup & Finalize
 RUN dnf remove -y \
