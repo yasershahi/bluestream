@@ -15,7 +15,6 @@ RUN dnf install -y \
     android-tools \
     asciinema \
     bat \
-    eza \
     flatpak-spawn \
     fzf \
     gnome-themes-extra \
