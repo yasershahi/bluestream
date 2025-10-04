@@ -13,19 +13,24 @@ RUN dnf install -y gcc make libxcrypt-compat && \
 # Core System Tools
 RUN dnf install -y \
     android-tools \
-    baobab \
-    distrobox \
+    asciinema \
+    bat \
+    eza \
     flatpak-spawn \
+    fzf \
     gnome-themes-extra \
     host-spawn \
+    htop \
     ifuse \
     papers \
     scrcpy \
     showtime \
     systemd-nspawn \
-    moby-engine \
-    docker-compose \
+    ncdu \
+    neovim \
     tailscale \
+    tldr \
+    tmux \
     unrar
 
 # Multimedia
