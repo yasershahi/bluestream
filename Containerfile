@@ -41,14 +41,9 @@ RUN dnf install -y \
 
 # Virtualization
 RUN dnf install -y \
-    edk2-ovmf \
     qemu-device-display-virtio-vga \
-    qemu-device-usb-redirect \
-    qemu-img \
     qemu-kvm-core \
-    qemu-system-x86
-
-RUN dnf install -y \
+    qemu-system-x86 \
     incus
 
 # Cleanup & Finalize
